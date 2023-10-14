@@ -1,22 +1,28 @@
 {
-  "name": "music-player",
-  "version": "1.0.0",
-  "description": "A music player that uses wynk music unofficial api to play music",
-  "main": "index.html",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/darshanCommits/musicPlayer.git"
-  },
-  "author": "Darshan Kumawat",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/darshanCommits/musicPlayer/issues"
-  },
-  "homepage": "https://github.com/darshanCommits/musicPlayer#readme",
-  "dependencies": {
-    "normalize.css": "^8.0.1"
-  }
+	"name": "music-player",
+	"version": "1.0.0",
+	"description": "A music player that uses wynk music unofficial api to play music",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/darshanCommits/musicPlayer.git"
+	},
+	"author": "Darshan Kumawat",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/darshanCommits/musicPlayer/issues"
+	},
+	"homepage": "https://github.com/darshanCommits/musicPlayer#readme",
+	"dependencies": {
+		"normalize.css": "^8.0.1"
+	},
+	"devDependencies": {
+		"typescript": "^5.2.2",
+		"vite": "^4.4.5"
+	}
 }

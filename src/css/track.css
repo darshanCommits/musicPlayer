@@ -23,12 +23,12 @@
     width: 100%;
     justify-content: space-evenly;
 
-    img {
+    :is(img) {
       border-radius: var(--rounding);
       aspect-ratio: 1/1;
     }
 
-    audio {
+    :is(audio) {
       margin: 2rem;
     }
   }

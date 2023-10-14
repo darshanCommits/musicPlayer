@@ -1,5 +1,6 @@
+import * as util from "./utils";
 
-function textAbstract(text, length, ellipsis = "...") {
+function textAbstract(text: string, length: number, ellipsis = "...") {
 	if (text.length <= length) return ellipsis;
 	if (text.length <= length) return text;
 	if (text === null) return "";
@@ -13,7 +14,7 @@ function textAbstract(text, length, ellipsis = "...") {
 }
 
 const api = {
-	getJSON: async (query) => {
+	getJSON: async (query: string) => {
 		// limits the search to 5 entries, no next support for now
 		const apiEndpoint =
 			"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
@@ -30,13 +31,6 @@ const api = {
 		} catch (error) {
 			throw new Error(`Failed to fetch : ${error.message}`);
 		}
-	},
-
-	getMusicComponent: (json) => {
-		/** TYPE TRACK : chatGPT*/
-		return json.data.results
-			.map((track) =>
-				api.getMetaData(track));
 	},
 
 	getMetaData: (track) => {
@@ -65,80 +59,47 @@ async function bruh() {
 	return api.getMetaData(data[0]);
 }
 
-
-// console.log(bruh());
-
-
-
-
-// Track event listeners
-const audio = document.querySelector("audio");
-const btn = document.querySelector("#play-pause");
-
-// console.log(audio.paused)
+const audio = document.querySelector("audio") as HTMLAudioElement;
+const btn = document.querySelector("#play-pause") as HTMLButtonElement;
 
 btn.addEventListener("click", () => {
 	if (audio.paused) audio.play();
 	else audio.pause();
-})
+});
 
-
-const seekbar = document.getElementById('seekbar');
+const seekbar = document.getElementById("seekbar") as HTMLInputElement;
 
 // Add an event listener to the seekbar for input changes
-seekbar.addEventListener('input', function() {
-	const seekTime = (audio.duration * seekbar.value) / 100;
+seekbar.addEventListener("input", function () {
+	const seekTime = (audio.duration * parseInt(seekbar.value)) / 100;
 	audio.currentTime = seekTime;
 });
 
 // Update the seekbar as the audio plays
-audio.addEventListener('timeupdate', function() {
-	events.player.changeTimelinePosition();
+audio.addEventListener("timeupdate", function () {
 	events.player.trackDurationTracker();
 	events.player.trackSeekbar();
 });
 
 const events = {
-
 	player: {
 		trackSeekbar: () => {
-			const seekbarValue = (audio.currentTime / audio.duration) * 100;
+			const seekbarValue = (
+				(audio.currentTime / audio.duration) *
+				100
+			).toString();
 			seekbar.value = seekbarValue;
-		},
-
-		changeTimelinePosition: () => {
-			const percentagePosition = (100 * audio.currentTime) / audio.duration;
-			seekbar.style.backgroundSize = `${percentagePosition}% 100%`;
-			seekbar.value = percentagePosition;
+			seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
 		},
 
 		trackDurationTracker: () => {
 			const currentTime = audio.currentTime;
-			const inMinutes = convertToMin(currentTime);
+			const inMinutes = util.convertToMin(currentTime);
 
-			const elapsedTime = document.querySelector("#elapsed-time");
+			const elapsedTime = document.querySelector(
+				"#elapsed-time",
+			) as HTMLDivElement;
 			elapsedTime.innerText = inMinutes;
-
-		}
-
-
-	}
-}
-
-
-
-
-function convertToMin(seconds) {
-	if (isNaN(seconds) || seconds < 0) {
-		return "Invalid input";
-	}
-
-	const minutes = Math.floor(seconds / 60);
-	const remainingSeconds = Math.round(seconds % 60); // Round to the nearest second
-
-	const formattedMinutes = String(minutes).padStart(2, '0');
-	const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-
-	return `${formattedMinutes}:${formattedSeconds}`;
-}
-
+		},
+	},
+};
