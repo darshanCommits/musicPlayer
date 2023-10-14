@@ -1,4 +1,3 @@
-/** api by @sumitkolhe */
 
 function textAbstract(text, length, ellipsis = "...") {
 	if (text.length <= length) return ellipsis;
@@ -66,7 +65,8 @@ async function bruh() {
 	return api.getMetaData(data[0]);
 }
 
-console.log(bruh());
+
+// console.log(bruh());
 
 
 
@@ -75,7 +75,7 @@ console.log(bruh());
 const audio = document.querySelector("audio");
 const btn = document.querySelector("#play-pause");
 
-console.log(audio.paused)
+// console.log(audio.paused)
 
 btn.addEventListener("click", () => {
 	if (audio.paused) audio.play();
@@ -93,16 +93,52 @@ seekbar.addEventListener('input', function() {
 
 // Update the seekbar as the audio plays
 audio.addEventListener('timeupdate', function() {
-	const seekbarValue = (audio.currentTime / audio.duration) * 100;
-	seekbar.value = seekbarValue;
+	events.player.changeTimelinePosition();
+	events.player.trackDurationTracker();
+	events.player.trackSeekbar();
 });
 
+const events = {
 
-function changeTimelinePosition() {
-	const percentagePosition = (100 * audio.currentTime) / audio.duration;
-	seekbar.style.backgroundSize = `${percentagePosition}% 100%`;
-	seekbar.value = percentagePosition;
+	player: {
+		trackSeekbar: () => {
+			const seekbarValue = (audio.currentTime / audio.duration) * 100;
+			seekbar.value = seekbarValue;
+		},
+
+		changeTimelinePosition: () => {
+			const percentagePosition = (100 * audio.currentTime) / audio.duration;
+			seekbar.style.backgroundSize = `${percentagePosition}% 100%`;
+			seekbar.value = percentagePosition;
+		},
+
+		trackDurationTracker: () => {
+			const currentTime = audio.currentTime;
+			const inMinutes = convertToMin(currentTime);
+
+			const elapsedTime = document.querySelector("#elapsed-time");
+			elapsedTime.innerText = inMinutes;
+
+		}
+
+
+	}
 }
 
-audio.ontimeupdate = changeTimelinePosition;
+
+
+
+function convertToMin(seconds) {
+	if (isNaN(seconds) || seconds < 0) {
+		return "Invalid input";
+	}
+
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = Math.round(seconds % 60); // Round to the nearest second
+
+	const formattedMinutes = String(minutes).padStart(2, '0');
+	const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+
+	return `${formattedMinutes}:${formattedSeconds}`;
+}
 
