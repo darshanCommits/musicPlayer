@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/darshanCommits/musicPlayer/issues"
   },
-  "homepage": "https://github.com/darshanCommits/musicPlayer#readme"
+  "homepage": "https://github.com/darshanCommits/musicPlayer#readme",
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  }
 }

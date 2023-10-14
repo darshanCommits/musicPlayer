@@ -67,3 +67,42 @@ async function bruh() {
 }
 
 console.log(bruh());
+
+
+
+
+// Track event listeners
+const audio = document.querySelector("audio");
+const btn = document.querySelector("#play-pause");
+
+console.log(audio.paused)
+
+btn.addEventListener("click", () => {
+	if (audio.paused) audio.play();
+	else audio.pause();
+})
+
+
+const seekbar = document.getElementById('seekbar');
+
+// Add an event listener to the seekbar for input changes
+seekbar.addEventListener('input', function() {
+	const seekTime = (audio.duration * seekbar.value) / 100;
+	audio.currentTime = seekTime;
+});
+
+// Update the seekbar as the audio plays
+audio.addEventListener('timeupdate', function() {
+	const seekbarValue = (audio.currentTime / audio.duration) * 100;
+	seekbar.value = seekbarValue;
+});
+
+
+function changeTimelinePosition() {
+	const percentagePosition = (100 * audio.currentTime) / audio.duration;
+	seekbar.style.backgroundSize = `${percentagePosition}% 100%`;
+	seekbar.value = percentagePosition;
+}
+
+audio.ontimeupdate = changeTimelinePosition;
+

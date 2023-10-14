@@ -3,12 +3,38 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=, initial-scale=">
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saavn webMeister</title>
   <script defer src="src/js/index.js"></script>
+  <link rel="stylesheet" href="src/css/styles.css">
 </head>
 
-<body>
+<body class="flex f-cen">
+
+  <div id="track" class="flex f-col f-cen">
+
+    <div id="track-art" class="flex">
+      <img src="https://c.saavncdn.com/113/Anjaana-Anjaani-Hindi-2010-20221211111152-150x150.jpg" alt="">
+
+      <div id="track-metadata" class="flex f-col f-cen">
+        <h3>Tujhe Bhula Diya</h3>
+        <p>Mohit Chauhan...</p>
+      </div>
+
+    </div>
+
+    <div id="custom-seekbar" class="flex f-cen">
+      <button id="play-pause">play</button>
+      <div id="elapsed-time">0:0</div>
+      <input id="seekbar" type="range" min="0" value="0">
+      <div id="total-time">0:0</div>
+    </div>
+
+    <audio src="https://aac.saavncdn.com/664/c71ac17cd40718ab5371a9d8d86b8bcc_320.mp4">
+      Your browser does not support the audio format.
+    </audio>
+  </div>
+
 
 </body>
 
