@@ -15,43 +15,44 @@ function textAbstract(text, length, ellipsis = "...") {
 
 const api = {
 	getJSON: async (query) => {
+		// limits the search to 5 entries, no next support for now
 		const apiEndpoint =
-			"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?query=";
+			"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
 		const apiURL = apiEndpoint + query;
 
 		try {
 			const res = await fetch(apiURL, { mode: "cors" });
-			const json = res.json();
 
-			return json;
+			if (!res.ok)
+				throw new Error(`Network response : Not Okay.
+	      \nTry checking typos in apiEndpoint variable.`);
+
+			return res.json();
 		} catch (error) {
 			throw new Error(`Failed to fetch : ${error.message}`);
 		}
 	},
 
-	// getMusicComponent: (json) => {
-	// 	/** TYPE TRACK : chatGPT*/
-	// 	const trackList = json.data.results;
-
-	// 	const bruh = [];
-
-	// 	bruh.forEach((track) => {
-	// 		const relevantData = getMetaData(track);
-	// 	});
-	// },
+	getMusicComponent: (json) => {
+		/** TYPE TRACK : chatGPT*/
+		return json.data.results
+			.map((track) =>
+				api.getMetaData(track));
+	},
 
 	getMetaData: (track) => {
 		const { name, album, year, duration, primaryArtists, image, downloadUrl } =
 			track;
 		const { link: imageLink } = image[1];
+		// yet to add selector from DOM
 		const { link: downloadUrlLink } = downloadUrl[2];
 
 		return {
-			name,
-			album: album.name,
+			name: textAbstract(name, 25),
+			album: textAbstract(album.name, 20),
+			artists: textAbstract(primaryArtists, 30),
 			year,
 			duration,
-			artists: primaryArtists,
 			image: imageLink,
 			downloadUrl: downloadUrlLink,
 		};
