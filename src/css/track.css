@@ -2,13 +2,14 @@
   --track-fg: #D7D3CE;
   --track-fg-2: #94919E;
   --track-bg: #060639;
-  --rounding: 5px;
+  --rounding: 9px;
   --pill: 99999999px;
   --seekbar-fg: #5c5c5c;
   --seekbar-bg: #121337;
 }
 
 #track {
+  display: none;
   background-color: var(--track-bg);
   width: 25rem;
   padding: 3rem;

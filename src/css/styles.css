@@ -1,6 +1,8 @@
-@import "../../node_modules/normalize.css/normalize.css";
 @import "util.css";
+
 @import "track.css";
+@import "search.css";
+@import "list.css";
 
 body {
   height: 100vh;

@@ -1,4 +1,4 @@
-export function convertToMin(seconds) {
+export function convertToMin(seconds:number) {
 	if (isNaN(seconds) || seconds < 0) {
 		return "Invalid input";
 	}
@@ -10,4 +10,16 @@ export function convertToMin(seconds) {
 	const formattedSeconds = String(remainingSeconds).padStart(2, "0");
 
 	return `${formattedMinutes}:${formattedSeconds}`;
+}
+
+export function textAbstract(text: string, length: number, ellipsis = "...") {
+	if (text.length <= length) return text;
+	if (text === null) return "";
+
+	let abstractedTest = text.substring(0, length);
+	const lastWord = abstractedTest.lastIndexOf(" "); // this will check if any word was cut in between
+
+	abstractedTest = abstractedTest.substring(0, lastWord) + ellipsis;
+
+	return abstractedTest;
 }
