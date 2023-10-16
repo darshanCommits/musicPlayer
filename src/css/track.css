@@ -9,7 +9,6 @@
 }
 
 #track {
-  display: none;
   background-color: var(--track-bg);
   width: 25rem;
   padding: 3rem;

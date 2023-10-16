@@ -1,10 +1,14 @@
-export function convertToMin(seconds:number) {
-	if (isNaN(seconds) || seconds < 0) {
+export function convertToMin(seconds: number | string) {
+	const secs = typeof seconds === "number" 
+		? seconds 
+		: parseFloat(seconds);
+
+	if (isNaN(secs) || secs < 0) {
 		return "Invalid input";
 	}
 
-	const minutes = Math.floor(seconds / 60);
-	const remainingSeconds = Math.round(seconds % 60); // Round to the nearest second
+	const minutes = Math.floor(secs / 60);
+	const remainingSeconds = Math.round(secs % 60); // Round to the nearest second
 
 	const formattedMinutes = String(minutes).padStart(2, "0");
 	const formattedSeconds = String(remainingSeconds).padStart(2, "0");

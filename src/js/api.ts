@@ -1,5 +1,5 @@
-import * as util from "./utils"
-import {JsonResponse, TrackMetaData} from "./sharedTypes";
+import * as util from "./utils";
+import { JsonResponse, TrackMetaData } from "./sharedTypes";
 
 export const api = {
 	getJSON: async (query: string) => {
@@ -17,11 +17,11 @@ export const api = {
 
 			return res.json();
 		} catch (error) {
-			throw new Error(`Failed to fetch : ${error.message}`);
+			throw new Error("Failed to fetch");
 		}
 	},
 
-	getMetaData: (track ): TrackMetaData => {
+	getMetaData: (track): TrackMetaData => {
 		const { name, album, year, duration, primaryArtists, image, downloadUrl } =
 			track;
 		const { link: imageLink } = image[1];
@@ -36,6 +36,16 @@ export const api = {
 			duration,
 			image: imageLink,
 			downloadUrl: downloadUrlLink,
-		}
+		};
 	},
-}
+
+	getSearcResult: async (searchQuery = "atif aslam") => {
+		const result = await api.getJSON(searchQuery);
+		const json: JsonResponse[] = await result.data.results;
+		const data: TrackMetaData[] = json
+			.map((track) =>
+				api.getMetaData(track));
+
+		return data;
+	},
+};
