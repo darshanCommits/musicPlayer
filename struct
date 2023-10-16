@@ -1,0 +1,16 @@
+ .
+├──  index.html
+├──  src
+│  ├──  css
+│  │  ├──  list.css
+│  │  ├──  search.css
+│  │  ├──  styles.css
+│  │  ├──  track.css
+│  │  └──  util.css
+│  └──  js
+│     ├──  api.ts
+│     ├──  app.ts
+│     ├──  dom.ts
+│     ├──  sharedTypes.ts
+│     └──  utils.ts
+└──  tsconfig.json

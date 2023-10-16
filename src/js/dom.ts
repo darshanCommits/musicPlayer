@@ -41,6 +41,7 @@ export const events = {
 	},
 };
 
+
 export const dom = {
 
 	setPlaybackPosition: () => {
@@ -59,7 +60,8 @@ export const dom = {
 		    <img src="${track.image}" alt="${track.name}">
 		    <div class="flex f-col ">
 		      <h3>${track.name}</h3>
-		      <p>${track.artists}</p>
+		      <h3>${track.album}</h3>
+		      <p>${track.primaryArtists}</p>
 		    </div>
 		  </div>`;
 	},

@@ -1,26 +1,30 @@
 export interface JsonResponse {
+	status: string;
 	data: {
 		results: TrackMetaData[];
 		// Other properties go here
 	};
 }
 
+interface Album {
+  name: string;
+  url: string;
+}
+
 interface AlbumArt {
 	link: string;
-	// Add other properties as needed
 }
 
 interface DownloadUrl {
 	link: string;
-	// Add other properties as needed
 }
 
 export interface TrackMetaData {
 	name: string;
-	album: string;
+	album: Album | string;
 	year: number;
 	duration: number;
-	artists: string;
-	image: AlbumArt[];
-	downloadUrl: DownloadUrl[];
+	primaryArtists: string;
+	image: AlbumArt[] | AlbumArt;
+	downloadUrl: DownloadUrl[] | DownloadUrl;
 }
