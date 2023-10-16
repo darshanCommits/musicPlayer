@@ -13,9 +13,9 @@ import {
 } from "./dom";
 
 const arr = listContainer.children;
+
 const bruh: TrackMetaData[] = await api.getSearcResult();
 const list = dom.getList(bruh);
-
 trackList.innerHTML = list;
 
 btn.addEventListener("click", () => {
@@ -23,7 +23,6 @@ btn.addEventListener("click", () => {
 });
 
 seekbar.addEventListener("input", () => dom.setPlaybackPosition());
-
 
 audio.addEventListener("timeupdate", () => {
 	events.player.updateElapsedTrackTimeDisplay();

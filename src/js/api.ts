@@ -1,7 +1,20 @@
 import * as util from "./utils";
 import { JsonResponse, TrackMetaData } from "./sharedTypes";
 
+/**
+ * API module for interacting with the music search API.
+ */
+
 export const api = {
+
+  /**
+   * Fetch JSON data from the music search API.
+   *
+   * @param query - The search query.
+   * @returns A Promise that resolves to a JSON response.
+   * @throws An error if the network request fails.
+   */	
+	
 	getJSON: async (query: string): Promise<JsonResponse> => {
 		// limits the search to 5 entries, no next support for now
 		const apiEndpoint =
@@ -21,6 +34,13 @@ export const api = {
 		}
 	},
 
+	/**
+   * Get metadata for a track.
+   *
+   * @param track - The track metadata.
+   * @returns Transformed track metadata.
+   */
+	
 	getMetaData: (track: TrackMetaData): TrackMetaData => {
 		const {
 			name,
@@ -43,6 +63,13 @@ export const api = {
 			downloadUrl:  downloadUrl[2]?.link || '',
 		};
 	},
+
+  /**
+   * Search for tracks based on a query.
+   *
+   * @param searchQuery - The search query (default: "altaf raja").
+   * @returns A Promise that resolves to an array of track metadata.
+   */
 
 	getSearcResult: async (searchQuery = "altaf raja"): Promise<TrackMetaData[]> => {
 		const result: JsonResponse= await api.getJSON(searchQuery);

@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"typedoc": "typedoc"
 	},
 	"repository": {
 		"type": "git",
@@ -22,6 +23,7 @@
 		"normalize.css": "^8.0.1"
 	},
 	"devDependencies": {
+		"typedoc": "^0.25.2",
 		"typescript": "^5.2.2",
 		"vite": "^4.4.5"
 	}
