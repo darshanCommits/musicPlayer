@@ -1,6 +1,7 @@
 import { TrackMetaData } from "./sharedTypes";
 // import { list } from "./events";
 
+export const loadMore = document.querySelector("#load-more") as HTMLButtonElement;
 export const audio = document.querySelector("audio") as HTMLAudioElement;
 export const seekbar = document.getElementById("seekbar") as HTMLInputElement;
 export const input = document.querySelector("#search-input") as HTMLInputElement;

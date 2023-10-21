@@ -1,3 +1,9 @@
+interface ApiParams {
+  limit: number;
+  page: number;
+  query: string;
+}
+
 /**
  * Converts seconds to a formatted time string (e.g., "mm:ss").
  * @param seconds - The number of seconds to convert.
@@ -6,7 +12,7 @@
 export function convertToMin(seconds: number | string) {
 	const secs = typeof seconds === "number" ? seconds : parseFloat(seconds);
 
-	if (isNaN(secs) || secs < 0)	return "Invalid input";
+	if (isNaN(secs) || secs < 0) return "Invalid input";
 
 	const minutes = Math.floor(secs / 60);
 	const remainingSeconds = Math.round(secs % 60); // Round to the nearest second
@@ -33,3 +39,11 @@ export function textAbstract(text: string, length: number, ellipsis = "...") {
 
 	return text.substring(0, lastSpaceIndex) + ellipsis;
 }
+
+export const transformToApiParameters = (params: ApiParams) => {
+  const apiParams = Object.keys(params)
+    .map(key => `${key}=${encodeURIComponent(params[key])}`)
+    .join("&");
+
+  return apiParams;
+};

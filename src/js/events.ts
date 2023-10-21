@@ -1,7 +1,7 @@
 import * as util from "./utils";
 import * as dom from "./dom";
 import { fetchSearchResult } from "./api";
-import { TrackMetaData } from "./sharedTypes";
+import { JsonResponse, TrackMetaData } from "./sharedTypes";
 
 /**
  * Player functions for controlling playback and display.
@@ -88,10 +88,10 @@ export const search = {
 
 	/**
    * Perform a music search based on the given query.
-   * @param query - The search query.
+   * @param json - The search query.
    */
-	performSearch: async (query: string) => {
-		const trackList = await fetchSearchResult(query);
+	performSearch: async (json: JsonResponse) => {
+		const trackList = await fetchSearchResult(json);
 		list.createTrackList(trackList);
 	},
 };

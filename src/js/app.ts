@@ -3,22 +3,36 @@ import "../css/styles.css";
 // import { TrackMetaData } from "./sharedTypes";
 import * as events from "./events";
 import * as dom from "./dom";
-// import { getSearchResult } from "./api";
+import { getJSON } from "./api";
 
 // initial page load
-events.search.performSearch("kk");
+let prevHash = "kk";
+const query = await getJSON(prevHash);
+events.search.performSearch(query);
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
-	const inputQuery = dom.input.value;
-	events.search.performSearch(inputQuery);
-	events.search.updateHash(inputQuery);
+	const input = dom.input.value;
+	const query = await getJSON(input);
+	events.search.performSearch(query);
+	events.search.updateHash(input);
 });
 
-window.addEventListener("hashchange" , async () => {
-	const inputQuery = window.location.hash.substring(1);
-	events.search.performSearch(inputQuery);
-})
+dom.loadMore.addEventListener("click", async () => {
+	const query = await getJSON(prevHash);
+	events.search.performSearch(query);
+});
+
+window.addEventListener("hashchange", async () => {
+	const newHash = window.location.hash;
+
+	if (newHash !== prevHash) {
+		const inputQuery = await getJSON(newHash.substring(1));
+		events.search.performSearch(inputQuery);
+
+		prevHash = newHash;
+	}
+});
 
 dom.playState.addEventListener("click", () => {
 	const state = dom.audio.paused;
@@ -36,8 +50,10 @@ dom.audio.addEventListener("timeupdate", () => {
 dom.listContainer.addEventListener("click", (e) => {
 	const target = e.target as HTMLDivElement;
 	const isTrack = target?.classList.contains("list-item");
-	const track = isTrack ? target : target.closest(".list-item") as HTMLDivElement;
+	const track = isTrack
+		? target
+		: (target.closest(".list-item") as HTMLDivElement);
 
 	events.list.playTrack(track);
-	dom.updatePauseBtn(true)
+	dom.updatePauseBtn(true);
 });

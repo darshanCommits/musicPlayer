@@ -3,7 +3,7 @@ import { JsonResponse, TrackMetaData } from "./sharedTypes";
 
 // limits the search to 5 entries, no next support for now
 const API_ENDPOINT =
-	"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
+	"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?";
 
 /**
  * Fetch JSON data from the music search API.
@@ -13,8 +13,16 @@ const API_ENDPOINT =
  * @throws An error if the network request fails.
  */
 
-export const getJSON = async (query: string): Promise<JsonResponse> => {
-	const apiURL = API_ENDPOINT + query;
+export const getJSON = async (query: string, page = 1 ): Promise<JsonResponse> => {
+	const params = {
+		limit : 5,
+		page : page,
+		query : query,
+	}
+
+	const encodedParam = util.transformToApiParameters(params);
+	const apiURL = API_ENDPOINT + encodedParam;
+
 	try {
 		const result = await fetch(apiURL, { mode: "cors" });
 
@@ -60,8 +68,8 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
  * @returns A Promise that resolves to an array of track metadata.
  */
 
-export const fetchSearchResult = async (searchQuery: string) => {
-	const result: JsonResponse = await getJSON(searchQuery);
+export const fetchSearchResult = async (result: JsonResponse) => {
+	// const result: JsonResponse = await getJSON(searchQuery);
 	const json: TrackMetaData[] = result.data.results;
 	const data: TrackMetaData[] = json.map((track) => getMetaData(track));
 
