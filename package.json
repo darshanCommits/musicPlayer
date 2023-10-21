@@ -1,13 +1,12 @@
 {
 	"name": "music-player",
-	"version": "0.0.7",
+	"version": "0.2.0",
 	"description": "A music player that uses wynk music unofficial api to play music",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview",
-		"typedoc": "typedoc"
+		"preview": "vite preview"
 	},
 	"repository": {
 		"type": "git",
@@ -23,7 +22,6 @@
 		"normalize.css": "^8.0.1"
 	},
 	"devDependencies": {
-		"typedoc": "^0.25.2",
 		"typescript": "^5.2.2",
 		"vite": "^4.4.5"
 	}

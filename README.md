@@ -1,12 +1,10 @@
-# cadex06-music-player
-MUSIC PLAYER
-
+# Saavn webMeister
 
 install dependencies
-> npm i
+` npm i `
 
 to start dev server
-> npm run dev
+` npm run dev `
 
 to build
-> npm run build
+` npm run build `

@@ -1,5 +1,0 @@
-{
-	"out": "./docs",
-	"entryPoints": ["./src/js/**/*.ts"],
-	"tsconfig": "tsconfig.json"
-}
