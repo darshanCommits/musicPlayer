@@ -1,15 +1,20 @@
 import * as util from "./utils";
-import { audio, seekbar } from "./dom";
+import * as dom from "./dom";
+import { TrackMetaData } from "./sharedTypes";
 
 export const player = {
+	updatePlayState: (state : boolean) => {
+		state ? dom.audio.play() : dom.audio.pause();
+	},
+
 	/** Updates the display of the seekbar. */
 	updateSeekbarDisplay: () => {
 		const seekbarValue = (
-			(audio.currentTime / audio.duration) *
+			(dom.audio.currentTime / dom.audio.duration) *
 			100
 		).toString();
-		seekbar.value = seekbarValue;
-		seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
+		dom.seekbar.value = seekbarValue;
+		dom.seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
 	},
 
 	/** Updates the display of elapsed track time. */
@@ -17,7 +22,7 @@ export const player = {
 		const elapsedTime = document.querySelector(
 			"#elapsed-time",
 		) as HTMLDivElement;
-		const currentTime = audio.currentTime;
+		const currentTime = dom.audio.currentTime;
 		const inMinutes = util.convertToMin(currentTime);
 
 		elapsedTime.innerText = inMinutes;
@@ -34,13 +39,19 @@ export const list = {
 		const trackDuration = trackElem?.getAttribute("data-duration");
 
 		if (trackLink && trackDuration) {
-			audio.src = trackLink;
+			dom.audio.src = trackLink;
 			totalTime.innerText = util.convertToMin(trackDuration);
 		} else {
 			console.error(`link is ${trackLink}. Duration is ${trackDuration}`);
 			throw new Error("Invalid track link!!!");
 		}
 
-		audio.play();
+		dom.playAudio();
 	},
+
+	createList : (trackList: TrackMetaData[]) => {
+		const musicItemList = dom.getList(trackList);
+		dom.trackList.innerHTML = musicItemList;
+	},
+	
 };

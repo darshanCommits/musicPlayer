@@ -27,8 +27,8 @@ export interface TrackMetaData {
   name: string;
   album: Album | string;
   year: number;
-  duration: number;
+  duration: number ;
   primaryArtists: string;
-  image: AlbumArt[] | AlbumArt;
-  downloadUrl: DownloadUrl[] | DownloadUrl;
+  image: AlbumArt[] | AlbumArt | string;
+  downloadUrl: DownloadUrl[] | DownloadUrl | string;
 }

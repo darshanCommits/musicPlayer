@@ -13,6 +13,8 @@ export const getJSON = async (query: string): Promise<JsonResponse> => {
 	// limits the search to 5 entries, no next support for now
 	const apiEndpoint =
 		"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
+
+
 	const apiURL = apiEndpoint + query;
 
 	try {
@@ -60,7 +62,7 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
  * @returns A Promise that resolves to an array of track metadata.
  */
 
-export const getSearcResult = async (
+export const getSearchResult = async (
 	searchQuery = "altaf raja",
 ) => {
 	const result: JsonResponse = await getJSON(searchQuery);
