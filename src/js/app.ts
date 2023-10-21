@@ -3,21 +3,26 @@ import "../css/styles.css";
 // import { TrackMetaData } from "./sharedTypes";
 import * as events from "./events";
 import * as dom from "./dom";
-import { getSearchResult } from "./api";
+// import { getSearchResult } from "./api";
 
-let currentTrackList = await getSearchResult("kk");
-events.list.createList(currentTrackList);
+// initial page load
+events.search.performSearch("kk");
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
 	const inputQuery = dom.input.value;
-	const trackList = await getSearchResult(inputQuery);
-	events.list.createList(trackList);
+	events.search.performSearch(inputQuery);
+	events.search.updateHash(inputQuery);
 });
+
+window.addEventListener("hashchange" , async () => {
+	const inputQuery = window.location.hash.substring(1);
+	events.search.performSearch(inputQuery);
+})
 
 dom.playState.addEventListener("click", () => {
 	const state = dom.audio.paused;
-	events.player.updatePlayState(state);
+	events.player.updatePlaybackState(state);
 	dom.updatePauseBtn(state);
 });
 
@@ -33,6 +38,6 @@ dom.listContainer.addEventListener("click", (e) => {
 	const isTrack = target?.classList.contains("list-item");
 	const track = isTrack ? target : target.closest(".list-item") as HTMLDivElement;
 
-	events.list.play(track);
+	events.list.playTrack(track);
 	dom.updatePauseBtn(true)
 });

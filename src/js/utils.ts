@@ -1,31 +1,35 @@
-/** Converts seconds to a formatted time string (e.g., "mm:ss"). */
+/**
+ * Converts seconds to a formatted time string (e.g., "mm:ss").
+ * @param seconds - The number of seconds to convert.
+ * @returns The formatted time string.
+ */
 export function convertToMin(seconds: number | string) {
-  const secs = typeof seconds === "number" 
-    ? seconds 
-    : parseFloat(seconds);
+	const secs = typeof seconds === "number" ? seconds : parseFloat(seconds);
 
-  if (isNaN(secs) || secs < 0) {
-    return "Invalid input";
-  }
+	if (isNaN(secs) || secs < 0)	return "Invalid input";
 
-  const minutes = Math.floor(secs / 60);
-  const remainingSeconds = Math.round(secs % 60); // Round to the nearest second
+	const minutes = Math.floor(secs / 60);
+	const remainingSeconds = Math.round(secs % 60); // Round to the nearest second
 
-  const formattedMinutes = String(minutes).padStart(2, "0");
-  const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+	const formattedMinutes = String(minutes).padStart(2, "0");
+	const formattedSeconds = String(remainingSeconds).padStart(2, "0");
 
-  return `${formattedMinutes}:${formattedSeconds}`;
+	return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-/** Truncates a text string to a specified length with an ellipsis. */
+/**
+ * Truncates a text string to a specified length with an ellipsis.
+ * @param text - The text to truncate.
+ * @param length - The maximum length of the truncated text.
+ * @param ellipsis - The ellipsis string to append (default: "...").
+ * @returns The truncated text.
+ */
 export function textAbstract(text: string, length: number, ellipsis = "...") {
-  if (text.length <= length) return text;
-  if (text === null) return "";
+	if (text.length <= length) return text;
+	if (text === null) return "";
 
-  let abstractedText = text.substring(0, length);
-  const lastWord = abstractedText.lastIndexOf(" "); // Check if any word was cut in between
+	const lastSpaceIndex = text.lastIndexOf(" ", length);
+	if (lastSpaceIndex === -1) return text.substring(0, length) + ellipsis;
 
-  abstractedText = abstractedText.substring(0, lastWord) + ellipsis;
-
-  return abstractedText;
+	return text.substring(0, lastSpaceIndex) + ellipsis;
 }

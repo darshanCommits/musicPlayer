@@ -1,6 +1,10 @@
 import * as util from "./utils";
 import { JsonResponse, TrackMetaData } from "./sharedTypes";
 
+// limits the search to 5 entries, no next support for now
+const API_ENDPOINT =
+	"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
+
 /**
  * Fetch JSON data from the music search API.
  *
@@ -10,13 +14,7 @@ import { JsonResponse, TrackMetaData } from "./sharedTypes";
  */
 
 export const getJSON = async (query: string): Promise<JsonResponse> => {
-	// limits the search to 5 entries, no next support for now
-	const apiEndpoint =
-		"https://jiosaavn-api-privatecvc2.vercel.app/search/songs?limit=5&query=";
-
-
-	const apiURL = apiEndpoint + query;
-
+	const apiURL = API_ENDPOINT + query;
 	try {
 		const result = await fetch(apiURL, { mode: "cors" });
 
@@ -58,13 +56,11 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
 /**
  * Search for tracks based on a query.
  *
- * @param searchQuery - The search query (default: "altaf raja").
+ * @param searchQuery - The search query.
  * @returns A Promise that resolves to an array of track metadata.
  */
 
-export const getSearchResult = async (
-	searchQuery = "altaf raja",
-) => {
+export const fetchSearchResult = async (searchQuery: string) => {
 	const result: JsonResponse = await getJSON(searchQuery);
 	const json: TrackMetaData[] = result.data.results;
 	const data: TrackMetaData[] = json.map((track) => getMetaData(track));

@@ -1,14 +1,25 @@
 import * as util from "./utils";
 import * as dom from "./dom";
+import { fetchSearchResult } from "./api";
 import { TrackMetaData } from "./sharedTypes";
 
+/**
+ * Player functions for controlling playback and display.
+ */ 
 export const player = {
-	updatePlayState: (state : boolean) => {
+
+	/**
+	 * Update the playback state (play/pause).
+	 * @param state - True to play, false to pause.
+	 */
+	 updatePlaybackState: (state: boolean) => {
 		state ? dom.audio.play() : dom.audio.pause();
 	},
 
-	/** Updates the display of the seekbar. */
-	updateSeekbarDisplay: () => {
+  /**
+   * Update the display of the seekbar.
+   */
+		updateSeekbarDisplay: () => {
 		const seekbarValue = (
 			(dom.audio.currentTime / dom.audio.duration) *
 			100
@@ -29,11 +40,15 @@ export const player = {
 	},
 };
 
+
+/**
+ * Functions for managing and controlling the list of tracks.
+ */
 export const list = {
 	/** Plays the selected track.
 	 * @param trackElem - The element representing the track.
 	 */
-	play: (trackElem: Element) => {
+	playTrack: (trackElem: Element) => {
 		const totalTime = document.querySelector("#total-time") as HTMLDivElement;
 		const trackLink = trackElem?.getAttribute("data-download");
 		const trackDuration = trackElem?.getAttribute("data-duration");
@@ -46,12 +61,37 @@ export const list = {
 			throw new Error("Invalid track link!!!");
 		}
 
-		dom.playAudio();
+		dom.audio.play();
 	},
 
-	createList : (trackList: TrackMetaData[]) => {
+  /**
+   * Create a list of tracks.
+   * @param trackList - An array of track metadata.
+   */
+  	createTrackList: (trackList: TrackMetaData[]) => {
 		const musicItemList = dom.getList(trackList);
-		dom.trackList.innerHTML = musicItemList;
+		dom.listContainer.innerHTML = musicItemList;
 	},
-	
+};
+
+/**
+ * Functions for searching and controlling search functionality.
+ */
+export const search = {
+  /**
+   * Update the URL hash with a search query.
+   * @param query - The search query.
+   */
+  updateHash: (query: string) => {
+		window.location.hash = query;
+	},
+
+	/**
+   * Perform a music search based on the given query.
+   * @param query - The search query.
+   */
+	performSearch: async (query: string) => {
+		const trackList = await fetchSearchResult(query);
+		list.createTrackList(trackList);
+	},
 };
