@@ -9,9 +9,12 @@
 }
 
 #track {
-  background-color: var(--track-bg);
-  width: 25rem;
+  position: fixed;
+  top: 40%;
+  left: 10%;
   padding: 3rem;
+  background-color: var(--track-bg);
+  width: 20rem;
   border-radius: calc(var(--rounding) * 1.2);
   color: var(--track-fg);
 
@@ -24,6 +27,7 @@
     justify-content: space-evenly;
 
     :is(img) {
+      width: 100px;
       border-radius: var(--rounding);
       aspect-ratio: 1/1;
     }

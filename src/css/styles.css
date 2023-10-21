@@ -7,3 +7,9 @@
 body {
   height: 100vh;
 }
+
+header {
+  height: 5rem;
+  background: #dd4151;
+
+}

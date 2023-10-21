@@ -1,7 +1,9 @@
 #list-container {
   --rounding: 9px;
+  position: absolute;
 
-
+  top: 20%;
+  right: 10%;
 }
 
 .list-item {
