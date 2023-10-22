@@ -15,7 +15,6 @@ const API_ENDPOINT =
 
 export const getJSON = async (params: string): Promise<JsonResponse> => {
 	const apiURL = API_ENDPOINT + params;
-
 	console.log(apiURL);
 
 	try {
@@ -41,11 +40,12 @@ export const getJSON = async (params: string): Promise<JsonResponse> => {
  */
 
 export const getMetaData = (track: TrackMetaData): TrackMetaData => {
-	const { name, primaryArtists, album, year, duration, image, downloadUrl } =
+	const { name, primaryArtists, album, year, duration, image, downloadUrl, id } =
 		track;
 	const albumName = typeof album === "object" ? album.name : album;
 
 	return {
+		id,
 		album: util.textAbstract(albumName || "", 20),
 		primaryArtists: util.textAbstract(primaryArtists || "", 30),
 		name: util.textAbstract(name || "", 25),
@@ -57,14 +57,13 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
 };
 
 /**
- * Search for tracks based on a query.
+ * Transform the resulted JSON to usable MetaData.
  *
- * @param searchQuery - The search query.
+ * @param result - The json response.
  * @returns A Promise that resolves to an array of track metadata.
  */
 
 export const fetchSearchResult = (result: JsonResponse) => {
-	// const result: JsonResponse = await getJSON(searchQuery);
 	const json: TrackMetaData[] = result.data.results;
 	const data: TrackMetaData[] = json.map((track) => getMetaData(track));
 

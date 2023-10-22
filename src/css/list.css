@@ -1,5 +1,6 @@
 #list-container {
   --rounding: 9px;
+
   position: absolute;
 
   top: 20%;

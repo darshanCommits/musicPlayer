@@ -6,6 +6,7 @@ import { fetchSearchResult } from "../api";
 /** Plays the selected track.
  * @param trackElem - The element representing the track.
  */
+
 export const playTrack = (trackElem: Element) => {
 	const totalTime = document.querySelector("#total-time") as HTMLDivElement;
 	const trackLink = trackElem?.getAttribute("data-download");
@@ -26,6 +27,7 @@ export const playTrack = (trackElem: Element) => {
  * Create a list of tracks.
  * @param trackList - An array of track metadata.
  */
+
 export const createTrackList = (trackList: TrackMetaData[], append = false) => {
 	const musicItemList = dom.getList(trackList);
 	if(append)
@@ -37,4 +39,5 @@ export const createTrackList = (trackList: TrackMetaData[], append = false) => {
 export const loadTrackList = (query: JsonResponse, append = false) => {
 	const trackList = fetchSearchResult(query);
 	if(trackList.length !== 0)	createTrackList(trackList, append);
+	// else handleNoResultsFound();
 };

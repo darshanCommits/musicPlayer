@@ -4,6 +4,7 @@ import { convertToMin } from "../utils";
 /**
  * Update the display of the seekbar.
  */
+
 export const updateSeekbarDisplay = () => {
     const seekbarValue = (
         (dom.audio.currentTime / dom.audio.duration) *
@@ -16,6 +17,7 @@ export const updateSeekbarDisplay = () => {
 /**
  * Sets the playback position based on the seekbar value.
  */
+
 export const setPlaybackPosition = () => {
     const seekTime = (dom.audio.duration * parseInt(dom.seekbar.value)) / 100;
     dom.audio.currentTime = seekTime;
@@ -38,6 +40,7 @@ export const updateElapsedTrackTimeDisplay = () => {
  * Updates the play/pause button state in the UI.
  * @param state - True if playing, false if paused.
  */
+
 export const updatePauseBtn = (state: boolean) => {
     if (state) dom.playState.innerText = "⏸";
     else dom.playState.innerText = "▶";
@@ -47,6 +50,7 @@ export const updatePauseBtn = (state: boolean) => {
  * Update the playback state (play/pause).
  * @param state - True to play, false to pause.
  */
+
 export const updatePlaybackState = (state: boolean) => {
     state ? dom.audio.play() : dom.audio.pause();
 };

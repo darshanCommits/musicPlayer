@@ -5,45 +5,49 @@ import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
-
 let page = 1;
 let append = false; // handles whether need to load more results or create new entry
-let prevHash = `page=${page}&query=english`;
+let prevHash = "";
+let currentTrackDiv: HTMLDivElement;
+const trackHistory: Set<HTMLDivElement> = new Set();
 
 (async () => {
-	// const json = await getJSON(prevHash);
-	// list.loadTrackList(json);
+	const initialHash = `page=${page}&query=english`;
+	const json = await getJSON(initialHash);
+	list.loadTrackList(json);
 
-	window.location.hash = prevHash;
+	window.location.hash = initialHash;
 })();
-
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
-	page = 1
+	page = 1;
 	append = false;
 	const newHash = `page=${page}&query=${dom.input.value}`;
 
-	if (newHash === prevHash)	return;
+	if (newHash === prevHash) return;
 
 	window.location.hash = newHash;
 });
 
-dom.loadMore.addEventListener("click", async () => {
+dom.btnNext.addEventListener("click", async () => {
 	const query = new URLSearchParams(prevHash.substring(1)).get("query");
 	append = true;
-  window.location.hash = `page=${++page}&query=${query}`;
+	window.location.hash = `page=${++page}&query=${query}`;
 });
 
 window.addEventListener("hashchange", async () => {
 	const newHash = window.location.hash;
-	
-	if (prevHash === newHash)	return;
 
-	const json = await getJSON(newHash.substring(1));
-	console.log(json);
+	if (prevHash === newHash) return;
 
-	list.loadTrackList(json, append);
+	if (newHash === "#history")
+		dom.listContainer.innerHTML = dom.convertSetToHtml(trackHistory);
+	else {
+		const json = await getJSON(newHash.substring(1));
+		list.loadTrackList(json, append);
+	}
+
 	prevHash = newHash;
 });
 
@@ -63,10 +67,24 @@ dom.audio.addEventListener("timeupdate", () => {
 dom.listContainer.addEventListener("click", (e) => {
 	const target = e.target as HTMLDivElement;
 	const isTrack = target?.classList.contains("list-item");
-	const track = isTrack
+	currentTrackDiv = isTrack
 		? target
 		: (target.closest(".list-item") as HTMLDivElement);
 
-	list.playTrack(track);
+	trackHistory.add(currentTrackDiv);
+	list.playTrack(currentTrackDiv);
+	console.log(trackHistory);
 	player.updatePauseBtn(true);
+});
+
+dom.audio.addEventListener("ended", () => {
+	const current = currentTrackDiv.getAttribute("data-index");
+	if (current === null) return;
+
+	const next = parseInt(current) + 1;
+	console.log(next);
+});
+
+dom.btnHistory.addEventListener("click", () => {
+	window.location.hash = "history";
 });

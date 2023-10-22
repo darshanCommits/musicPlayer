@@ -24,6 +24,7 @@ interface DownloadUrl {
 
 /** Represents metadata for a track. */
 export interface TrackMetaData {
+  id: string;
   name: string;
   album: Album | string;
   year: number;
