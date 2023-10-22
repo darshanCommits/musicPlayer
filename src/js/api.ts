@@ -13,15 +13,8 @@ const API_ENDPOINT =
  * @throws An error if the network request fails.
  */
 
-export const getJSON = async (query: string, page = 1 ): Promise<JsonResponse> => {
-	const params = {
-		limit : 5,
-		page : page,
-		query : query,
-	}
-
-	const encodedParam = util.transformToApiParameters(params);
-	const apiURL = API_ENDPOINT + encodedParam;
+export const getJSON = async (params: string): Promise<JsonResponse> => {
+	const apiURL = API_ENDPOINT + params;
 
 	console.log(apiURL);
 

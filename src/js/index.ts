@@ -4,42 +4,44 @@ import * as list from "./events/list";
 import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
-
+import { getPageParameter, setPageParameter, updatePageParameter } from "./utils";
 
 // initial page load
-let page = 5;
-let prevHash = `page=${page}&query=Tuje bhula diya`;
+const initialSearchQuery = "kk";
+const initialPage = 1;
+const initialHash = `${initialSearchQuery}?page=${initialPage}`;
+let prevHash = initialHash;
 
 (async () => {
 	window.location.hash = prevHash;
 })();
 
-
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
-	page = 1
-	const newHash = `page=${page}&query=${dom.input.value}`;
-
-	if (newHash === prevHash)	return;
+	const newHash = dom.input.value;
+	if (newHash === prevHash) return;
 
 	window.location.hash = newHash;
 });
 
 dom.loadMore.addEventListener("click", async () => {
-	const query = new URLSearchParams(prevHash.substring(1)).get("query");
-  window.location.hash = `page=${++page}&query=${query}`;
+	const currentPage = getPageParameter(prevHash);
+  const nextPage = currentPage + 1;
+  const newHash = updatePageParameter(prevHash, nextPage);	
+  setPageParameter(newHash, currentPage);
 });
 
 window.addEventListener("hashchange", async () => {
 	const newHash = window.location.hash;
-	
+  const currentPage = getPageParameter(newHash); // Extract the page parameter
 
-	if (prevHash === newHash)	return;
+	if (newHash === prevHash) return;
 
-	const json = await getJSON(newHash.substring(1));
-	console.log(json);
+	const query = await getJSON(newHash.substring(1));
+	list.loadTrackList(query);
 
-	list.loadTrackList(json);
+  setPageParameter(newHash, currentPage);
+
 	prevHash = newHash;
 });
 
@@ -66,3 +68,4 @@ dom.listContainer.addEventListener("click", (e) => {
 	list.playTrack(track);
 	player.updatePauseBtn(true);
 });
+
