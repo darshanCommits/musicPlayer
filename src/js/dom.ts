@@ -25,14 +25,6 @@ export const getList = (list: TrackMetaData[]) => {
 };
 
 /**
- * Sets the playback position based on the seekbar value.
- */
-export const setPlaybackPosition = () => {
-	const seekTime = (audio.duration * parseInt(seekbar.value)) / 100;
-	audio.currentTime = seekTime;
-};
-
-/**
  * Generates HTML for an individual track item.
  *
  * @param track - The track metadata.
@@ -65,14 +57,4 @@ export const updateTrackInfo = (track: TrackMetaData) => {
 		  <p>${track.primaryArtists}</p>
 		</div>
 	`;
-};
-
-/**
- * Updates the play/pause button state in the UI.
- *
- * @param state - True if playing, false if paused.
- */
-export const updatePauseBtn = (state: boolean) => {
-	if (state) playState.innerText = "⏸";
-	else playState.innerText = "▶";
 };

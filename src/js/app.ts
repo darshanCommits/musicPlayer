@@ -1,26 +1,22 @@
 import "normalize.css";
 import "../css/styles.css";
-// import { TrackMetaData } from "./sharedTypes";
-import * as events from "./events";
+import * as list from "./events/list"
+import * as player from "./events/player"
+import * as search from "./events/search"
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
 // initial page load
 let prevHash = "kk";
 const query = await getJSON(prevHash);
-events.search.performSearch(query);
+search.performSearch(query);
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
 	const input = dom.input.value;
 	const query = await getJSON(input);
-	events.search.performSearch(query);
-	events.search.updateHash(input);
-});
-
-dom.loadMore.addEventListener("click", async () => {
-	const query = await getJSON(prevHash);
-	events.search.performSearch(query);
+	search.performSearch(query);
+	search.updateHash(input);
 });
 
 window.addEventListener("hashchange", async () => {
@@ -28,7 +24,7 @@ window.addEventListener("hashchange", async () => {
 
 	if (newHash !== prevHash) {
 		const inputQuery = await getJSON(newHash.substring(1));
-		events.search.performSearch(inputQuery);
+		search.performSearch(inputQuery);
 
 		prevHash = newHash;
 	}
@@ -36,15 +32,15 @@ window.addEventListener("hashchange", async () => {
 
 dom.playState.addEventListener("click", () => {
 	const state = dom.audio.paused;
-	events.player.updatePlaybackState(state);
-	dom.updatePauseBtn(state);
+	player.updatePlaybackState(state);
+	player.updatePauseBtn(state);
 });
 
-dom.seekbar.addEventListener("input", () => dom.setPlaybackPosition());
+dom.seekbar.addEventListener("input", player.setPlaybackPosition);
 
 dom.audio.addEventListener("timeupdate", () => {
-	events.player.updateElapsedTrackTimeDisplay();
-	events.player.updateSeekbarDisplay();
+	player.updateElapsedTrackTimeDisplay();
+	player.updateSeekbarDisplay();
 });
 
 dom.listContainer.addEventListener("click", (e) => {
@@ -54,6 +50,6 @@ dom.listContainer.addEventListener("click", (e) => {
 		? target
 		: (target.closest(".list-item") as HTMLDivElement);
 
-	events.list.playTrack(track);
-	dom.updatePauseBtn(true);
+	list.playTrack(track);
+	player.updatePauseBtn(true);
 });
