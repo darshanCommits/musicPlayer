@@ -1,6 +1,7 @@
 import { convertToMin } from "../utils";
 import * as dom from "../dom";
-import { TrackMetaData } from "../sharedTypes";
+import { JsonResponse, TrackMetaData } from "../sharedTypes";
+import { fetchSearchResult } from "../api";
 
 /** Plays the selected track.
  * @param trackElem - The element representing the track.
@@ -25,7 +26,15 @@ export const playTrack = (trackElem: Element) => {
  * Create a list of tracks.
  * @param trackList - An array of track metadata.
  */
-export const createTrackList = (trackList: TrackMetaData[]) => {
+export const createTrackList = (trackList: TrackMetaData[], append = false) => {
 	const musicItemList = dom.getList(trackList);
-	dom.listContainer.innerHTML = musicItemList;
+	if(append)
+		dom.listContainer.innerHTML += musicItemList;
+	else
+		dom.listContainer.innerHTML = musicItemList;
+};
+
+export const loadTrackList = (query: JsonResponse, append = false) => {
+	const trackList = fetchSearchResult(query);
+	createTrackList(trackList, append);
 };

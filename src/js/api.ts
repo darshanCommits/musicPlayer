@@ -23,6 +23,8 @@ export const getJSON = async (query: string, page = 1 ): Promise<JsonResponse> =
 	const encodedParam = util.transformToApiParameters(params);
 	const apiURL = API_ENDPOINT + encodedParam;
 
+	console.log(apiURL);
+
 	try {
 		const result = await fetch(apiURL, { mode: "cors" });
 
@@ -68,7 +70,7 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
  * @returns A Promise that resolves to an array of track metadata.
  */
 
-export const fetchSearchResult = async (result: JsonResponse) => {
+export const fetchSearchResult = (result: JsonResponse) => {
 	// const result: JsonResponse = await getJSON(searchQuery);
 	const json: TrackMetaData[] = result.data.results;
 	const data: TrackMetaData[] = json.map((track) => getMetaData(track));
