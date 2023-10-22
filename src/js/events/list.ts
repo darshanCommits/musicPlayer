@@ -36,5 +36,5 @@ export const createTrackList = (trackList: TrackMetaData[], append = false) => {
 
 export const loadTrackList = (query: JsonResponse, append = false) => {
 	const trackList = fetchSearchResult(query);
-	createTrackList(trackList, append);
+	if(trackList.length !== 0)	createTrackList(trackList, append);
 };

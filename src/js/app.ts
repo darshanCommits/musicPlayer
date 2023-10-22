@@ -6,11 +6,14 @@ import * as dom from "./dom";
 import { getJSON } from "./api";
 
 
-// initial page load
-let page = 5;
-let prevHash = `page=${page}&query=Tuje bhula diya`;
+let page = 1;
+let append = false; // handles whether need to load more results or create new entry
+let prevHash = `page=${page}&query=english`;
 
 (async () => {
+	// const json = await getJSON(prevHash);
+	// list.loadTrackList(json);
+
 	window.location.hash = prevHash;
 })();
 
@@ -18,6 +21,7 @@ let prevHash = `page=${page}&query=Tuje bhula diya`;
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
 	page = 1
+	append = false;
 	const newHash = `page=${page}&query=${dom.input.value}`;
 
 	if (newHash === prevHash)	return;
@@ -27,19 +31,19 @@ dom.search.addEventListener("click", async (e) => {
 
 dom.loadMore.addEventListener("click", async () => {
 	const query = new URLSearchParams(prevHash.substring(1)).get("query");
+	append = true;
   window.location.hash = `page=${++page}&query=${query}`;
 });
 
 window.addEventListener("hashchange", async () => {
 	const newHash = window.location.hash;
 	
-
 	if (prevHash === newHash)	return;
 
 	const json = await getJSON(newHash.substring(1));
 	console.log(json);
 
-	list.loadTrackList(json);
+	list.loadTrackList(json, append);
 	prevHash = newHash;
 });
 
