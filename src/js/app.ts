@@ -4,7 +4,7 @@ import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
-const limit = 9;
+const limit = 12;
 let page = 1;
 let append = false;
 let prevHash = "";

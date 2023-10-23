@@ -5,11 +5,12 @@
 :root {
   --track-fg: #D7D3CE;
   --track-fg-2: #94919E;
-  --track-bg: #060639;
+  --track-bg: #0D1117;
   --rounding: 9px;
   --pill: 99999999px;
   --seekbar-bg: #3c3c3c;
   --seekbar-fg: #DD3D2C;
+  --red: #2D3133;
 }
 
 #seekbar {
@@ -55,4 +56,35 @@
     background-color: #FF634E;
     /* Replace with your red color */
   }
+}
+
+/* Webkit (Safari/Chrome) */
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--track-bg);
+  /* Background color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--red);
+  /* Color of the scrollbar thumb */
+  border-radius: var(--pill);
+
+}
+
+/* Firefox */
+/* Note: Firefox requires a pseudo-element to customize the scrollbar */
+/* You can use the `scrollbar` class on a container to target the scrollbar */
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #2D3133;
+  /* Color of the scrollbar thumb */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #2D3133;
+  /* Background color of the track */
 }
