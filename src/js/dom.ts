@@ -36,15 +36,23 @@ export const getList = (list: TrackMetaData[]) => {
  */
 
 export const getListItem = (track: TrackMetaData, i: number) => {
+const listItemClasses = "track-card flex border border border-red rounded-lg p-4";
+const imageClasses = 'w-16 h-16 object-cover rounded-lg';
+const textContainerClasses = 'flex flex-col ml-4';
+const trackNameClasses = 'text-sm font-semibold';
+const trackDetailsClasses = 'text-sm';
+const primaryArtistsClasses = 'text-sm text-gray-600';
+
 	return `
-    <div class="list-item flex" data-download="${track.downloadUrl}" data-duration="${track.duration}" data-index="${i}">
-      <img src="${track.image}" alt="${track.name}">
-      <div class="bruh flex f-col ">
-        <h3>${track.name}</h3>
-        <h3>${track.album} - ${track.year}</h3>
-        <p>${track.primaryArtists}</p>
-      </div>
-    </div>`;
+<div class="${listItemClasses}" data-download="${track.downloadUrl}" data-duration="${track.duration}" data-index="${i}">
+  <img src="${track.image}" alt="${track.name}" class="${imageClasses}">
+  <div class="${textContainerClasses}">
+    <h3 class="${trackNameClasses}">${track.name}</h3>
+    <h3 class="${trackDetailsClasses}">${track.album} - ${track.year}</h3>
+    <p class="${primaryArtistsClasses}">${track.primaryArtists}</p>
+  </div>
+</div>
+		`;
 };
 
 /**

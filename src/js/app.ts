@@ -1,5 +1,4 @@
 import "normalize.css";
-import "../css/styles.css";
 import * as list from "./events/list";
 import * as player from "./events/player";
 import * as dom from "./dom";
@@ -66,10 +65,10 @@ dom.audio.addEventListener("timeupdate", () => {
 
 dom.listContainer.addEventListener("click", (e) => {
 	const target = e.target as HTMLDivElement;
-	const isTrack = target?.classList.contains("list-item");
+	const isTrack = target?.classList.contains("track-card");
 	currentTrackDiv = isTrack
 		? target
-		: (target.closest(".list-item") as HTMLDivElement);
+		: (target.closest(".track-card") as HTMLDivElement);
 
 	trackHistory.add(currentTrackDiv);
 	list.playTrack(currentTrackDiv);

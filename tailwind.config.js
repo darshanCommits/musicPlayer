@@ -2,7 +2,16 @@
 export default {
   content: ["./index.html", "./src/js/**/*.ts"],
   theme: {
-    extend: {},
+    extend: {
+      colors : {
+        body : "#0D1117",
+        gray : "#2D3133",
+        red : "#DD3D2C",
+        "red-hover" : "#FF634E",
+      },
+      textColor : {
+      }
+    },
   },
   plugins: [],
 }

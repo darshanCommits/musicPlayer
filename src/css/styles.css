@@ -1,15 +1,73 @@
-@import "utils.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import "track.css";
-@import "search.css";
-@import "list.css";
-
-body {
-  height: 100vh;
+:root {
+  --track-fg: #D7D3CE;
+  --track-fg-2: #94919E;
+  --track-bg: #060639;
+  --rounding: 9px;
+  --pill: 99999999px;
+  --seekbar-bg: #3c3c3c;
+  --seekbar-fg: #DD3D2C;
 }
 
-header {
-  height: 5rem;
-  background: #dd4151;
+#seekbar {
+  appearance: none;
+  background-color: var(--seekbar-bg);
+  background-size: 0% 100%;
+  background-image: linear-gradient(var(--seekbar-fg), var(--seekbar-fg));
+  background-repeat: no-repeat;
 
+  &::-webkit-slider-thumb {
+    appearance: none;
+    opacity: 0;
+    width: 20px;
+    height: 10px;
+    border-radius: var(--pill);
+    cursor: pointer;
+    transition: all .3s linear;
+    background-color: var(--seekbar-fg);
+
+    &:hover {
+      background-color: var(--seekbar-fg);
+    }
+  }
+
+  &:hover::-webkit-slider-thumb {
+    opacity: 1;
+  }
+}
+
+#search-container {
+  font-family: Arial, sans-serif;
+}
+
+#search-input {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#search-button {
+  cursor: pointer;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+@layer components {
+  .bg-hover-red:hover {
+    background-color: #DD3D2C;
+    /* Replace with your red color */
+  }
+
+  .bg-active-red:active {
+    animation: clickAnimation 0.3s forwards;
+  }
+}
+
+@keyframes clickAnimation {
+  to {
+    background-color: #FF634E;
+    /* Replace with your red color */
+  }
 }
