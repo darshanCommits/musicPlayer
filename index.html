@@ -12,27 +12,28 @@
 
 <body class="min-h-screen flex flex-col bg-body text-white">
 
-  <header class="flex justify-center items-center h-20 bg-body ">
-    <form id="search-container" class="flex flex-row items-center bg-gray text-white rounded-full">
-      <input type="text" id="search-input" placeholder="Music doesn't sound musical %?..."
-        class="px-4 py-2 w-72 bg-gray rounded-full focus:outline-none">
-
-      <button id="search-button"
-        class="px-4 py-2 rounded-full focus:outline-none bg-red bg-hover-red bg-active-red p-4 transition duration-300 cursor-pointer">
-        Search
-      </button>
-    </form>
-
-    <button id="btn-history"
-      class="absolute right-4 bg-red hover:bg-red-hover text-white py-2 px-4 rounded-full focus:outline-none">
+  <header class="flex justify-between items-center h-20 bg-body px-8">
+    <button id="btn-history" class="bg-red active:bg-red-hover text-white py-2 px-3 focus:outline-none">
       History
     </button>
+
+    <form id="search-container" class="flex flex-row items-center bg-gray text-white rounded-br-full rounded-tl-full">
+      <input type="text" id="search-input" placeholder="Music doesn't sound musical %?..."
+        class="pl-6 py-2 w-72 bg-gray  rounded-br-full rounded-tl-full focus:outline-none">
+      <input type="submit" id="search-button"
+        class="bg-red active:bg-red-hover text-white py-2 px-4 focus:outline-none rounded-br-full rounded-tl-full">
+    </form>
+
+    <button id="btn-next" class="bg-red active:bg-red-hover text-white py-2 px-4 focus:outline-none">
+      Next
+    </button>
+
   </header>
 
 
   <main class="flex-grow p-8 pt-2">
 
-    <div id="list-container" class="grid grid-cols-3 gap-4"></div>
+    <div id="list-container" class="grid grid-cols-3 gap-4 transition-all"></div>
 
     <button id="btn-next">Load More</button>
     <button id="btn-history">History</button>
@@ -45,7 +46,7 @@
 
     <div id="track-art" class="flex items-center col-span-1">
       <img src="https://c.saavncdn.com/113/Anjaana-Anjaani-Hindi-2010-20221211111152-150x150.jpg" alt=""
-        class="w-20 h-20 rounded-lg">
+        class="w-16 h-16">
       <div id="track-metadata" class="ml-4">
         <h3 class="text-lg font-semibold">Tujhe Bhula Diya</h3>
         <p class="w-52 text-gray-600">Mohit Chauhan, Pritam, Sunidhi Chauhanfd</p>
@@ -53,7 +54,7 @@
     </div>
 
     <div id="custom-seekbar"
-      class="flex items-center justify-around bg-opacity-10 bg-gray w-full h-8 rounded-full px-4 col-span-3">
+      class="flex items-center justify-around bg-opacity-10 bg-gray w-full h-8 px-4 col-span-3 rounded-br-full rounded-tl-full">
       <button id="play-pause" class="w-6 mr-2 material-icons text-gray-300">play_circle_outline</button>
       <div id="elapsed-time" class="">00:00</div>
       <input id="seekbar" type="range" min="0" value="0"

@@ -39,21 +39,6 @@
   }
 }
 
-#search-container {
-  font-family: Arial, sans-serif;
-}
-
-#search-input {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-
-#search-button {
-  cursor: pointer;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-
 @layer components {
   .bg-hover-red:hover {
     background-color: #DD3D2C;

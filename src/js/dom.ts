@@ -2,15 +2,29 @@ import { TrackMetaData } from "./sharedTypes";
 // import { list } from "./events";
 
 export const btnNext = document.querySelector("#btn-next") as HTMLButtonElement;
-export const btnHistory = document.querySelector("#btn-history") as HTMLButtonElement;
+export const btnHistory = document.querySelector(
+	"#btn-history",
+) as HTMLButtonElement;
 export const audio = document.querySelector("audio") as HTMLAudioElement;
 export const seekbar = document.getElementById("seekbar") as HTMLInputElement;
-export const input = document.querySelector("#search-input") as HTMLInputElement;
-export const trackElement = document.querySelector("#track-art") as HTMLDivElement;
-export const search = document.querySelector("#search-button") as HTMLButtonElement;
-export const playState = document.querySelector("#play-pause") as HTMLButtonElement;
-export const listContainer = document.querySelector("#list-container") as HTMLDivElement;
-export const historyContainer = document.querySelector("#history-container") as HTMLDivElement;
+export const input = document.querySelector(
+	"#search-input",
+) as HTMLInputElement;
+export const trackElement = document.querySelector(
+	"#track-art",
+) as HTMLDivElement;
+export const search = document.querySelector(
+	"#search-button",
+) as HTMLInputElement;
+export const playState = document.querySelector(
+	"#play-pause",
+) as HTMLButtonElement;
+export const listContainer = document.querySelector(
+	"#list-container",
+) as HTMLDivElement;
+export const historyContainer = document.querySelector(
+	"#history-container",
+) as HTMLDivElement;
 
 /**
  * Generates the HTML list for a collection of tracks.
@@ -22,36 +36,36 @@ export const historyContainer = document.querySelector("#history-container") as 
 export const getList = (list: TrackMetaData[]) => {
 	if (!listContainer) throw new Error("element not found");
 
-	return list
-		.reduce((html, track, i) =>
-			`${html}${getListItem(track, i)}`, "");
+	return list.reduce((html, track) => `${html}${getListItem(track )}`, "");
 };
 
 /**
  * Generates HTML for an individual track item.
  *
  * @param track - The track metadata.
- * @param i - The index of the track.
  * @returns List item component.
  */
 
-export const getListItem = (track: TrackMetaData, i: number) => {
-const listItemClasses = "track-card flex border border border-red rounded-lg p-4";
-const imageClasses = 'w-16 h-16 object-cover rounded-lg';
-const textContainerClasses = 'flex flex-col ml-4';
-const trackNameClasses = 'text-sm font-semibold';
-const trackDetailsClasses = 'text-sm';
-const primaryArtistsClasses = 'text-sm text-gray-600';
+export const getListItem = (track: TrackMetaData) => {
+	const listItemStyles =
+		"relative track-card flex border border-red p-4 cursor-pointer transition-all active:scale-90";
+	const imageStyles = "w-16 h-16 object-cover ";
+	const textStyles = "flex flex-col ml-4";
+	const trackNameStyles = "text-sm font-semibold";
+	const trackDetailsStyles = "text-sm";
+	const trackYearStyles = "absolute right-4 text-sm";
+	const primaryArtistsStyles = "text-sm text-gray-600";
 
 	return `
-<div class="${listItemClasses}" data-download="${track.downloadUrl}" data-duration="${track.duration}" data-index="${i}">
-  <img src="${track.image}" alt="${track.name}" class="${imageClasses}">
-  <div class="${textContainerClasses}">
-    <h3 class="${trackNameClasses}">${track.name}</h3>
-    <h3 class="${trackDetailsClasses}">${track.album} - ${track.year}</h3>
-    <p class="${primaryArtistsClasses}">${track.primaryArtists}</p>
-  </div>
-</div>
+		<div class="${listItemStyles}" data-download="${track.downloadUrl}" data-duration="${track.duration}">
+		  <img class="${imageStyles}" src="${track.image}" alt="${track.name}">
+		  <div class="${textStyles}">
+		    <h3 class="${trackNameStyles}">${track.name}</h3>
+		    <h3 class="${trackDetailsStyles}">${track.album}</h3>
+		    <span class="${trackYearStyles}">${track.year}</span>
+		    <p class="${primaryArtistsStyles}">${track.primaryArtists}</p>
+		  </div>
+		</div>
 		`;
 };
 
@@ -78,11 +92,10 @@ export const updateTrackInfo = (track: TrackMetaData) => {
  * @param trackList - The set of HTMLDivElement elements representing tracks.
  * @returns The resulting HTML string.
  */
-export const convertSetToHtml = (trackList : Set<HTMLDivElement>) => {
+export const convertSetToHtml = (trackList: Set<HTMLDivElement>) => {
 	let result = "";
 
-	for(const track of trackList) 
-		result += track.outerHTML;
+	for (const track of trackList) result += track.outerHTML;
 
 	return result;
-}
+};

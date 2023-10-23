@@ -4,14 +4,15 @@ import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
+const limit = 9;
 let page = 1;
-let append = false; // handles whether need to load more results or create new entry
+let append = false;
 let prevHash = "";
 let currentTrackDiv: HTMLDivElement;
 const trackHistory: Set<HTMLDivElement> = new Set();
 
 (async () => {
-	const initialHash = `page=${page}&query=english`;
+	const initialHash = `page=${page}&limit=${limit}&query=english`;
 	const json = await getJSON(initialHash);
 	list.loadTrackList(json);
 
@@ -22,7 +23,7 @@ dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
 	page = 1;
 	append = false;
-	const newHash = `page=${page}&query=${dom.input.value}`;
+	const newHash = `page=${page}&limit=${limit}&query=${dom.input.value}`;
 
 	if (newHash === prevHash) return;
 
@@ -50,12 +51,6 @@ window.addEventListener("hashchange", async () => {
 	prevHash = newHash;
 });
 
-dom.playState.addEventListener("click", () => {
-	const state = dom.audio.paused;
-	player.updatePlaybackState(state);
-	player.updatePauseBtn(state);
-});
-
 dom.seekbar.addEventListener("input", player.setPlaybackPosition);
 
 dom.audio.addEventListener("timeupdate", () => {
@@ -70,20 +65,26 @@ dom.listContainer.addEventListener("click", (e) => {
 		? target
 		: (target.closest(".track-card") as HTMLDivElement);
 
-	trackHistory.add(currentTrackDiv);
-	list.playTrack(currentTrackDiv);
-	console.log(trackHistory);
-	player.updatePauseBtn(true);
+	playNewTrack(currentTrackDiv);
 });
 
 dom.audio.addEventListener("ended", () => {
-	const current = currentTrackDiv.getAttribute("data-index");
-	if (current === null) return;
+	currentTrackDiv = currentTrackDiv.nextElementSibling as HTMLDivElement;
+	playNewTrack(currentTrackDiv);
+});
 
-	const next = parseInt(current) + 1;
-	console.log(next);
+dom.playState.addEventListener("click", () => {
+	const state = dom.audio.paused;
+	player.updatePlaybackState(state);
+	player.updatePauseBtn(state);
 });
 
 dom.btnHistory.addEventListener("click", () => {
 	window.location.hash = "history";
 });
+
+const playNewTrack = (trackElem: HTMLDivElement) => {
+	trackHistory.add(trackElem);
+	list.playTrack(trackElem);
+	player.updatePauseBtn(true);
+};
