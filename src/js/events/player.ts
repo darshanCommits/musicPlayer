@@ -6,12 +6,12 @@ import { convertToMin } from "../utils";
  */
 
 export const updateSeekbarDisplay = () => {
-    const seekbarValue = (
-        (dom.audio.currentTime / dom.audio.duration) *
-        100
-    ).toString();
-    dom.seekbar.value = seekbarValue;
-    dom.seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
+	const seekbarValue = (
+		(dom.audio.currentTime / dom.audio.duration) *
+		100
+	).toString();
+	dom.seekbar.value = seekbarValue;
+	dom.seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
 };
 
 /**
@@ -19,21 +19,19 @@ export const updateSeekbarDisplay = () => {
  */
 
 export const setPlaybackPosition = () => {
-    const seekTime = (dom.audio.duration * parseInt(dom.seekbar.value)) / 100;
-    dom.audio.currentTime = seekTime;
+	const seekTime = (dom.audio.duration * parseInt(dom.seekbar.value)) / 100;
+	dom.audio.currentTime = seekTime;
 };
 
 /**
  * Updates the display of elapsed track time.
  */
 export const updateElapsedTrackTimeDisplay = () => {
-    const elapsedTime = document.querySelector(
-        "#elapsed-time",
-    ) as HTMLDivElement;
-    const currentTime = dom.audio.currentTime;
-    const inMinutes = convertToMin(currentTime);
+	const elapsedTime = document.querySelector("#elapsed-time") as HTMLDivElement;
+	const currentTime = dom.audio.currentTime;
+	const inMinutes = convertToMin(currentTime);
 
-    elapsedTime.innerText = inMinutes;
+	elapsedTime.innerText = inMinutes;
 };
 
 /**
@@ -42,8 +40,8 @@ export const updateElapsedTrackTimeDisplay = () => {
  */
 
 export const updatePauseBtn = (state: boolean) => {
-    if (state) dom.playState.innerText = "pause_circle_outline";
-    else dom.playState.innerText = "play_circle_outline";
+	if (state) dom.playState.innerText = "pause_circle_outline";
+	else dom.playState.innerText = "play_circle_outline";
 };
 
 /**
@@ -52,7 +50,6 @@ export const updatePauseBtn = (state: boolean) => {
  */
 
 export const updatePlaybackState = (state: boolean) => {
-    state ? dom.audio.play() : dom.audio.pause();
+	state ? dom.audio.play() : dom.audio.pause();
 };
-
 

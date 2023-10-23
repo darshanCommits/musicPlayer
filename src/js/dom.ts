@@ -33,10 +33,10 @@ export const historyContainer = document.querySelector(
  * @returns The list component.
  */
 
-export const getList = (list: TrackMetaData[]) => {
+export const generateTrackListHTML = (list: TrackMetaData[]) => {
 	if (!listContainer) throw new Error("element not found");
 
-	return list.reduce((html, track) => `${html}${getListItem(track )}`, "");
+	return list.reduce((html, track) => `${html}${generateTrackListItem(track )}`, "");
 };
 
 /**
@@ -46,7 +46,7 @@ export const getList = (list: TrackMetaData[]) => {
  * @returns List item component.
  */
 
-export const getListItem = (track: TrackMetaData) => {
+export const generateTrackListItem = (track: TrackMetaData) => {
 	const listItemStyles =
 		"relative track-card flex border border-red p-4 cursor-pointer transition-all active:scale-90";
 	const imageStyles = "w-16 h-16 object-cover ";
@@ -70,32 +70,41 @@ export const getListItem = (track: TrackMetaData) => {
 };
 
 /**
- * Updates the track information in the player.
+ * Retrieves the updated Now Playing MetaData.
  *
- * @param track - The track metadata.
+ * @param trackElem - The track element.
  * @returns Component for player UI.
  */
 
-export const updateTrackInfo = (track: TrackMetaData) => {
-	return ` 
-		<img src="${track.image}" alt="">
-		<div id="track-metadata" class="flex f-col f-cen">
-		  <h3>${track.name}</h3>
-		  <p>${track.primaryArtists}</p>
-		</div>
-	`;
+export const updateNowPlaying = (trackElem: HTMLDivElement) => {
+	if (!trackElem) return null;
+	const imgElem = trackElem.querySelector("img") as HTMLImageElement | null;
+	const pElem = trackElem.querySelector("p") as HTMLParagraphElement | null;
+	if(!imgElem || !pElem) return null;
+
+	const albumArt = imgElem.getAttribute("src") || null;
+	const trackName = imgElem.getAttribute("alt") || null;
+	const artists = pElem.innerText ;
+
+	return`<img src="${albumArt}" alt="${trackName}" class="w-16 h-16">
+		      <div id="track-metadata" class="ml-4">
+	        <h3 class="text-lg font-semibold">${trackName}</h3>
+	        <p class="w-52 text-gray-600">${artists}</p>
+	      </div>
+				`
 };
+
 
 /**
  * Converts a Set(DS) of HTMLDivElement elements representing tracks into an HTML string.
  *
- * @param trackList - The set of HTMLDivElement elements representing tracks.
+ * @param trackSet - The set of HTMLDivElement elements representing tracks.
  * @returns The resulting HTML string.
  */
-export const convertSetToHtml = (trackList: Set<HTMLDivElement>) => {
+export const convertTrackSetToHTML = (trackSet: Set<HTMLDivElement>) => {
 	let result = "";
 
-	for (const track of trackList) result += track.outerHTML;
+	for (const track of trackSet) result += track.outerHTML;
 
 	return result;
 };

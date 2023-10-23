@@ -29,7 +29,7 @@ export const playTrack = (trackElem: Element) => {
  */
 
 export const createTrackList = (trackList: TrackMetaData[], append = false) => {
-	const musicItemList = dom.getList(trackList);
+	const musicItemList = dom.generateTrackListHTML(trackList);
 	if(append)
 		dom.listContainer.innerHTML += musicItemList;
 	else

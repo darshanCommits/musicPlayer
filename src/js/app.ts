@@ -42,7 +42,7 @@ window.addEventListener("hashchange", async () => {
 	if (prevHash === newHash) return;
 
 	if (newHash === "#history")
-		dom.listContainer.innerHTML = dom.convertSetToHtml(trackHistory);
+		dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
 	else {
 		const json = await getJSON(newHash.substring(1));
 		list.loadTrackList(json, append);
@@ -87,4 +87,8 @@ const playNewTrack = (trackElem: HTMLDivElement) => {
 	trackHistory.add(trackElem);
 	list.playTrack(trackElem);
 	player.updatePauseBtn(true);
+	const updatedTrackInfo = dom.updateNowPlaying(trackElem);
+
+	if(updatedTrackInfo)
+		dom.trackElement.innerHTML = updatedTrackInfo;
 };
