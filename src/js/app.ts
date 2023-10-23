@@ -12,11 +12,13 @@ let currentTrackDiv: HTMLDivElement;
 const trackHistory: Set<HTMLDivElement> = new Set();
 
 (async () => {
-	const initialHash = `page=${page}&limit=${limit}&query=english`;
-	const json = await getJSON(initialHash);
+	let currentHash = window.location.hash.substring(1);
+	if(currentHash === "")	currentHash = `page=${page}&limit=${limit}&query=english`;
+
+	const json = await getJSON(currentHash);
 	list.loadTrackList(json);
 
-	window.location.hash = initialHash;
+	window.location.hash = currentHash;
 })();
 
 dom.search.addEventListener("click", async (e) => {
