@@ -40,51 +40,20 @@
   }
 }
 
-@layer components {
-  .bg-hover-red:hover {
-    background-color: #DD3D2C;
-    /* Replace with your red color */
-  }
 
-  .bg-active-red:active {
-    animation: clickAnimation 0.3s forwards;
-  }
-}
-
-@keyframes clickAnimation {
-  to {
-    background-color: #FF634E;
-    /* Replace with your red color */
-  }
-}
-
-/* Webkit (Safari/Chrome) */
+/* Set the width and color of the scrollbar track */
 ::-webkit-scrollbar {
-  width: .5rem;
+  width: 6px;
+  background-color: var(--track-bg);
 }
 
-::-webkit-scrollbar-track {
-  background: var(--track-bg);
-  /* Background color of the track */
-}
-
+/* Set the color of the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background: var(--red);
-  /* Color of the scrollbar thumb */
-  border-radius: var(--pill);
-
+  background-color: #333;
+  border-radius: 5px;
 }
 
-/* Firefox */
-/* Note: Firefox requires a pseudo-element to customize the scrollbar */
-/* You can use the `scrollbar` class on a container to target the scrollbar */
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: #2D3133;
-  /* Color of the scrollbar thumb */
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  background: #2D3133;
-  /* Background color of the track */
+/* Set the color of the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #444;
 }

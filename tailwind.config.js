@@ -6,6 +6,7 @@ export default {
       colors : {
         body : "#0D1117",
         gray : "#2D3133",
+        "gray-txt" : "#c0c0c0",
         red : "#DD3D2C",
         "red-hover" : "#FF634E",
       },

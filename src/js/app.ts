@@ -39,14 +39,17 @@ dom.btnNext.addEventListener("click", async () => {
 });
 
 window.addEventListener("hashchange", async () => {
-	const newHash = window.location.hash;
+	let newHash = window.location.hash.substring(1);
+	const query = new URLSearchParams(newHash).get("query");
 
 	if (prevHash === newHash) return;
 
-	if (newHash === "#history")
+	if(!query) newHash = `${prevHash}english`;
+
+	if (newHash === "history")
 		dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
 	else {
-		const json = await getJSON(newHash.substring(1));
+		const json = await getJSON(newHash);
 		list.loadTrackList(json, append);
 	}
 

@@ -48,8 +48,8 @@ export const generateTrackListHTML = (list: TrackMetaData[]) => {
 
 export const generateTrackListItem = (track: TrackMetaData) => {
 	const listItemStyles =
-		"relative track-card flex border border-red p-4 cursor-default transition-all active:scale-90";
-	const imageStyles = "w-16 h-16 object-cover ";
+		"relative track-card flex p-4 cursor-default transition-all card border-red border hover:scale-[1.02] hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98] active:translate-y-0";
+	const imageStyles = "w-16 h-16 object-cover";
 	const textStyles = "flex flex-col ml-4";
 	const trackNameStyles = "text-sm font-semibold";
 	const trackDetailsStyles = "text-sm";
@@ -86,11 +86,17 @@ export const updateNowPlaying = (trackElem: HTMLDivElement) => {
 	const trackName = imgElem.getAttribute("alt") || null;
 	const artists = pElem.innerText ;
 
-	return`<img src="${albumArt}" alt="${trackName}" class="w-16 h-16">
-		      <div id="track-metadata" class="ml-4">
-	        <h3 class="text-lg font-semibold">${trackName}</h3>
-	        <p class="w-52 text-gray-600">${artists}</p>
-	      </div>
+	const imgStyles = "w-16 h-16 mr-4";
+	const divStyles = "sm:mr-16";
+	const h3Styles = "text-lg font-semibold underline";
+	const pStyles = "w-40 text-gray-txt";
+
+	return`
+		<img src="${albumArt}" alt="${trackName}" class="${imgStyles}">
+    <div id="track-metadata" class="${divStyles}">
+      <h3 class="${h3Styles}">${trackName}</h3>
+      <p class="${pStyles}">${artists}</p>
+		</div>
 				`
 };
 

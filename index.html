@@ -12,8 +12,8 @@
 
 <body class="min-h-screen bg-body text-white">
 
-  <header class="fixed top-0 z-10 w-full h-20 flex justify-between items-center bg-body px-8 border-red border-b-2">
-    <button id="btn-history" class="bg-red active:bg-red-hover text-white py-2 px-3 focus:outline-none">
+  <header class="sm:fixed top-0 z-10 w-full h-20 flex justify-between items-center bg-body px-8 border-red border-b-2">
+    <button id="btn-history" class="bg-red text-white active:bg-red-hover  py-2 px-3 focus:outline-none">
       History
     </button>
 
@@ -21,35 +21,35 @@
       <input type="text" id="search-input" placeholder="Music doesn't sound musical %?..."
         class="pl-6 py-2 w-72 bg-gray focus:outline-none ">
       <input type="submit" id="search-button" value="Search"
-        class="border-red border-l-2 active:bg-red cursor-pointer text-white py-2 px-4 focus:outline-none">
+        class="active:bg-red bg-red text-white cursor-pointer py-2 px-4 focus:outline-none">
     </form>
 
-    <button id="btn-next" class="bg-red active:bg-red-hover text-white py-2 px-4 focus:outline-none">
+    <button id="btn-next" class="bg-red text-white active:bg-red-hover py-2 px-4 focus:outline-none">
       Next
     </button>
   </header>
 
 
-  <main class="p-6 py-24">
-    <div id="list-container" class="grid grid-cols-3 gap-4 transition-all"></div>
+  <main class="p-6 sm:pt-[6.25rem] sm:pb-28 pb-40">
+    <div id="list-container" class="grid lg:grid-cols-3 md:grid-cols-2 gap-4 transition-all"></div>
     <div id="history-container" class=""></div>
   </main>
+  <footer class="fixed bottom-0 border-t-2 border-red w-full bg-body px-8 py-3 flex items-center flex-col sm:flex-row">
 
-  <footer
-    class="fixed bottom-0 h-20 mt-20 border-t-2 border-red w-full bg-body grid gap-4 grid-flow-row-dense lg:grid-cols-4 place-items-center justify-items-start px-8 py-2 ">
-
-    <div id="track-art" class="flex items-center col-span-1">
+    <div id="track-art" class="flex items-center sm:m-0 mb-1">
       <img src="https://c.saavncdn.com/113/Anjaana-Anjaani-Hindi-2010-20221211111152-150x150.jpg" alt=""
-        class="w-16 h-16">
-      <div id="track-metadata" class="ml-4">
-        <h3 class="text-lg font-semibold">Tujhe Bhula Diya</h3>
-        <p class="w-52 text-gray-600">Mohit Chauhan, Pritam, Sunidhi Chauhanfd</p>
+        class="w-16 mr-4">
+      <div id="track-metadata" class="sm:mr-24">
+        <h3 class="text-lg font-semibold underline">Tujhe Bhula Diya</h3>
+        <p class="w-44 text-gray-txt">Mohit Chauhan, Pritam, Sunidhi Chauhan</p>
       </div>
     </div>
 
     <div id="custom-seekbar"
-      class="flex items-center justify-around bg-opacity-10 bg-gray w-full h-8 px-4 col-span-3  ">
+      class="flex items-center justify-around bg-opacity-10 bg-gray w-full h-10 px-4 hover:border-red-hover">
+      <button id="track-prev" class="w-6 mr-2 material-icons text-gray-300">skip_previous</button>
       <button id="play-pause" class="w-6 mr-2 material-icons text-gray-300">play_circle_outline</button>
+      <button id="track-next" class="w-6 mr-2 material-icons text-gray-300">skip_next</button>
       <div id="elapsed-time" class="">00:00</div>
       <input id="seekbar" type="range" min="0" value="0"
         class="relative h-1 bg-red w-full m-4 rounded-full cursor-pointer">
