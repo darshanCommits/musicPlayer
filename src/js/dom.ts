@@ -48,7 +48,7 @@ export const generateTrackListHTML = (list: TrackMetaData[]) => {
 
 export const generateTrackListItem = (track: TrackMetaData) => {
 	const listItemStyles =
-		"relative track-card flex border border-red p-4 cursor-pointer transition-all active:scale-90";
+		"relative track-card flex border border-red p-4 cursor-default transition-all active:scale-90";
 	const imageStyles = "w-16 h-16 object-cover ";
 	const textStyles = "flex flex-col ml-4";
 	const trackNameStyles = "text-sm font-semibold";
