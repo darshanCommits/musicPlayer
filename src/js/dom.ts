@@ -48,8 +48,8 @@ export const generateTrackListHTML = (list: TrackMetaData[]) => {
 
 export const generateTrackListItem = (track: TrackMetaData) => {
 	const listItemStyles =
-		"relative track-card flex p-4 cursor-default transition-all card border-red border hover:scale-[1.02] hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98] active:translate-y-0";
-	const imageStyles = "w-16 h-16 object-cover";
+		"relative track-card flex p-4 transition-all border-red border focus:border-2 focus:bg-red hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98] active:translate-y-0";
+	const imageStyles = "w-16 h-16 object-cover ";
 	const textStyles = "flex flex-col ml-4";
 	const trackNameStyles = "text-sm font-semibold";
 	const trackDetailsStyles = "text-sm";
@@ -57,7 +57,7 @@ export const generateTrackListItem = (track: TrackMetaData) => {
 	const primaryArtistsStyles = "text-sm text-gray-600";
 
 	return `
-		<div class="${listItemStyles}" data-download="${track.downloadUrl}" data-duration="${track.duration}">
+		<div class="${listItemStyles}" data-download="${track.downloadUrl}" data-duration="${track.duration}" tabindex="-1">
 		  <img class="${imageStyles}" src="${track.image}" alt="${track.name}">
 		  <div class="${textStyles}">
 		    <h3 class="${trackNameStyles}">${track.name}</h3>

@@ -1,7 +1,5 @@
-done
-1. Update #track-art when changed track
-
-yet to
-1. add keybing for fn
-2. make play pause icon change on playState and not on click
-
+1. add next prev button fn.
+2. better header on phone.
+3. handle creating history in a more optimized way. 
+  >rn it just renders everythin back and forth.
+  >honestly can't think of optimal solution. need help.

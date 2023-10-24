@@ -7,6 +7,8 @@ import { getJSON } from "./api";
 
 const limit = 18;
 let page = 1;
+const initialQuery = "mohit chahuhan";
+const initalHash = `page=${page}&limit=${limit}&query=${initialQuery}`;
 let append = false;
 let prevHash = "";
 let currentTrackDiv: HTMLDivElement;
@@ -14,12 +16,9 @@ const trackHistory: Set<HTMLDivElement> = new Set();
 
 (async () => {
 	let currentHash = window.location.hash.substring(1);
-	if(currentHash === "")	currentHash = `page=${page}&limit=${limit}&query=english`;
-
+	currentHash = initalHash;
 	const json = await getJSON(currentHash);
 	list.loadTrackList(json);
-
-	window.location.hash = currentHash;
 })();
 
 dom.search.addEventListener("click", async (e) => {
@@ -40,12 +39,11 @@ dom.btnNext.addEventListener("click", async () => {
 });
 
 window.addEventListener("hashchange", async () => {
-	let newHash = window.location.hash.substring(1);
+
+	const newHash = window.location.hash.substring(1);
 	const query = new URLSearchParams(newHash).get("query");
 
-	if (prevHash === newHash) return;
-
-	if(!query) newHash = `${prevHash}english`;
+	if (prevHash === newHash || query === "") return;
 
 	if (newHash === "history")
 		dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
@@ -95,6 +93,5 @@ const playNewTrack = (trackElem: HTMLDivElement) => {
 	player.updatePauseBtn(true);
 	const updatedTrackInfo = dom.updateNowPlaying(trackElem);
 
-	if(updatedTrackInfo)
-		dom.trackElement.innerHTML = updatedTrackInfo;
+	if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
 };

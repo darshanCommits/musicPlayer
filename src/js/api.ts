@@ -1,5 +1,6 @@
 import * as util from "./utils";
 import { JsonResponse, TrackMetaData } from "./sharedTypes";
+import { listContainer } from "./dom";
 
 // limits the search to 5 entries, no next support for now
 const API_ENDPOINT =
@@ -15,18 +16,17 @@ const API_ENDPOINT =
 
 export const getJSON = async (params: string): Promise<JsonResponse> => {
 	const apiURL = API_ENDPOINT + params;
-	console.log(apiURL);
+	console.log(apiURL)
 
 	try {
 		const result = await fetch(apiURL, { mode: "cors" });
 
-		if (!result.ok)
-			throw new Error(
-				`Network response: ${result.status} - ${result.statusText}`,
-			);
-
+		if (!result.ok) {
+			throw new Error(`Network response: ${result.status} - ${result.statusText}`);
+		}
 		return result.json();
 	} catch (error) {
+		listContainer.innerText = "TF JUST HAPPENED NO IDEA MATE!! probably the api is down or some shit??";
 		console.error("Error fetching data:", error);
 		throw new Error("Failed to fetch data.");
 	}

@@ -4,7 +4,7 @@
 	"description": "A music player that uses wynk music unofficial api to play music",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite & npx tailwindcss -i ./src/css/styles.css -o ./src/output.css --watch",
 		"build": "vite build",
 		"preview": "vite preview --port 9012"
 	},
