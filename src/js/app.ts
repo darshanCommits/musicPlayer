@@ -1,10 +1,11 @@
 import "normalize.css";
+import "../output.css"
 import * as list from "./events/list";
 import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
-const limit = 12;
+const limit = 18;
 let page = 1;
 let append = false;
 let prevHash = "";

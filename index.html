@@ -7,7 +7,6 @@
   <title>Saavn webMeister</title>
   <script type="module" defer src="./src/js/app.ts"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./dist/output.css">
 </head>
 
 <body class="min-h-screen bg-body text-white">
@@ -18,8 +17,8 @@
     </button>
 
     <form id="search-container" class="flex flex-row items-center bg-gray text-white  ">
-      <input type="text" id="search-input" placeholder="Music doesn't sound musical %?..."
-        class="pl-6 py-2 w-72 bg-gray focus:outline-none ">
+      <input autofocus type="text" id="search-input" placeholder="Music doesn't sound musical %?..."
+        class="pl-6 py-2 w-72 bg-gray focus:outline-none">
       <input type="submit" id="search-button" value="Search"
         class="active:bg-red bg-red text-white cursor-pointer py-2 px-4 focus:outline-none">
     </form>
