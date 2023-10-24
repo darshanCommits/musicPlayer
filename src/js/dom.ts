@@ -15,7 +15,7 @@ export const trackElement = document.querySelector(
 ) as HTMLDivElement;
 export const search = document.querySelector(
 	"#search-button",
-) as HTMLInputElement;
+) as HTMLButtonElement;
 export const playState = document.querySelector(
 	"#play-pause",
 ) as HTMLButtonElement;

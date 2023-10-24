@@ -634,6 +634,22 @@ video {
   width: 100%;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-24 {
+  width: 6rem;
+}
+
+.w-32 {
+  width: 8rem;
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -758,6 +774,10 @@ video {
   padding-left: 1.5rem;
 }
 
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -766,6 +786,10 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-\[20px\] {
+  font-size: 20px;
 }
 
 .font-semibold {
@@ -910,6 +934,10 @@ video {
     margin-right: 6rem;
   }
 
+  .sm\:w-72 {
+    width: 18rem;
+  }
+
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -918,8 +946,12 @@ video {
     padding-bottom: 7rem;
   }
 
-  .sm\:pt-\[6\.25rem\] {
-    padding-top: 6.25rem;
+  .sm\:pt-\[6\.5rem\] {
+    padding-top: 6.5rem;
+  }
+
+  .sm\:pl-6 {
+    padding-left: 1.5rem;
   }
 }
 
