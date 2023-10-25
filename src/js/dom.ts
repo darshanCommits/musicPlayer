@@ -37,7 +37,10 @@ export const historyContainer = document.querySelector(
 export const generateTrackListHTML = (list: TrackMetaData[]) => {
 	if (!listContainer) throw new Error("element not found");
 
-	return list.reduce((html, track) => `${html}${generateTrackListItem(track )}`, "");
+	return list.reduce(
+		(html, track) => `${html}${generateTrackListItem(track)}`,
+		"",
+	);
 };
 
 /**
@@ -55,7 +58,7 @@ export const generateTrackListItem = (track: TrackMetaData) => {
 	const trackNameStyles = "text-md font-semibold";
 	const trackAlbumStyles = "text-sm my-1";
 	const trackYearStyles = "absolute right-4 text-sm";
-	const trackDurationStyles= "absolute bottom-4 right-4 text-sm";
+	const trackDurationStyles = "absolute bottom-4 right-4 text-sm";
 	const primaryArtistsStyles = "text-sm text-gray-txt";
 
 	const duration = convertToMin(track.duration);
@@ -82,29 +85,34 @@ export const generateTrackListItem = (track: TrackMetaData) => {
  */
 
 export const updateNowPlaying = (trackElem: HTMLDivElement) => {
-	if (!trackElem) return null;
+	if (!trackElem) {
+		console.error(`${trackElem} is missing`);
+		return null;
+	}
 	const imgElem = trackElem.querySelector("img") as HTMLImageElement | null;
 	const pElem = trackElem.querySelector("p") as HTMLParagraphElement | null;
-	if(!imgElem || !pElem) return null;
+	if (!imgElem || !pElem) {
+		console.error(`${imgElem} || ${pElem} is missing`);
+		return null;
+	}
 
-	const albumArt = imgElem.getAttribute("src") || null;
 	const trackName = imgElem.getAttribute("alt") || null;
-	const artists = pElem.innerText ;
+	const albumArt = imgElem.getAttribute("src") || null;
+	const artists = pElem.innerText;
 
-	const imgStyles = "w-16 h-16 mr-4";
-	const divStyles = "sm:mr-16";
-	const h3Styles = "text-lg font-semibold underline";
-	const pStyles = "w-40 text-gray-txt";
+	const imgStyles = "w-[4.25rem] mr-4";
+	const divStyles = "sm:mr-24";
+	const h3Styles = "font-semibold text-lg whitespace-nowrap overflow-hidden overflow-ellipsis w-44";
+	const pStyles = "w-44 text-gray-txt";
 
-	return`
+	return `
 		<img src="${albumArt}" alt="${trackName}" class="${imgStyles}">
     <div id="track-metadata" class="${divStyles}">
       <h3 class="${h3Styles}">${trackName}</h3>
       <p class="${pStyles}">${artists}</p>
 		</div>
-				`
+				`;
 };
-
 
 /**
  * Converts a Set(DS) of HTMLDivElement elements representing tracks into an HTML string.

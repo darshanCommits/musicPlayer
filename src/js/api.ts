@@ -47,7 +47,7 @@ export const getMetaData = (track: TrackMetaData): TrackMetaData => {
 	return {
 		id,
 		album: util.textAbstract(albumName || "", 20),
-		primaryArtists: util.textAbstract(primaryArtists || "", 30),
+		primaryArtists: util.textAbstract(primaryArtists || "", 35),
 		name: util.textAbstract(name || "", 25),
 		year: year || 0,
 		duration: duration || 0,
