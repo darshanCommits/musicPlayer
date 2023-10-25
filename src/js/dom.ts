@@ -1,9 +1,10 @@
 import { TrackMetaData } from "./sharedTypes";
+import { convertToMin } from "./utils";
 // import { list } from "./events";
 
 export const btnNext = document.querySelector("#btn-next") as HTMLButtonElement;
 export const btnHistory = document.querySelector(
-	"#btn-history",
+	".btn-history",
 ) as HTMLButtonElement;
 export const audio = document.querySelector("audio") as HTMLAudioElement;
 export const seekbar = document.getElementById("seekbar") as HTMLInputElement;
@@ -49,21 +50,25 @@ export const generateTrackListHTML = (list: TrackMetaData[]) => {
 export const generateTrackListItem = (track: TrackMetaData) => {
 	const listItemStyles =
 		"relative track-card flex p-4 transition-all border-red border focus:border-2 hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98] active:translate-y-0";
-	const imageStyles = "w-16 h-16 object-cover ";
-	const textStyles = "flex flex-col ml-4";
-	const trackNameStyles = "text-sm font-semibold";
-	const trackDetailsStyles = "text-sm";
+	const imageStyles = "w-[4.25rem] h-[4.25rem]";
+	const textStyles = "flex flex-col ml-4 mt-[2px]";
+	const trackNameStyles = "text-md font-semibold";
+	const trackAlbumStyles = "text-sm my-1";
 	const trackYearStyles = "absolute right-4 text-sm";
-	const primaryArtistsStyles = "text-sm text-gray-600";
+	const trackDurationStyles= "absolute bottom-4 right-4 text-sm";
+	const primaryArtistsStyles = "text-sm text-gray-txt";
+
+	const duration = convertToMin(track.duration);
 
 	return `
 		<div class="${listItemStyles}" data-download="${track.downloadUrl}" data-duration="${track.duration}" tabindex="-1">
 		  <img class="${imageStyles}" src="${track.image}" alt="${track.name}">
 		  <div class="${textStyles}">
 		    <h3 class="${trackNameStyles}">${track.name}</h3>
-		    <h3 class="${trackDetailsStyles}">${track.album}</h3>
-		    <span class="${trackYearStyles}">${track.year}</span>
+		    <h3 class="${trackAlbumStyles}">${track.album}</h3>
 		    <p class="${primaryArtistsStyles}">${track.primaryArtists}</p>
+		    <span class="${trackYearStyles}">${track.year}</span>
+		    <span class="${trackDurationStyles}">${duration}</span>
 		  </div>
 		</div>
 		`;
