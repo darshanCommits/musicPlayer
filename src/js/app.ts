@@ -1,5 +1,4 @@
 import "normalize.css";
-// import "../output.css"
 import * as list from "./events/list";
 import * as player from "./events/player";
 import * as dom from "./dom";

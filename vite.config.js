@@ -1,7 +1,13 @@
 /** @type {import('vite').UserConfig} */
-export default {
-  // config options
-  build : {
-    target : "esnext"
-  }
-}
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // Other Vite configurations...
+
+  build: {
+    // Set the target to the latest ECMAScript version
+    target: 'esnext',
+  },
+
+});
+
