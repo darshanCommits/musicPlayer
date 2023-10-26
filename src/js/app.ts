@@ -13,12 +13,10 @@ let prevHash = "";
 let currentTrackDiv: HTMLDivElement;
 const trackHistory: Set<HTMLDivElement> = new Set();
 
-(async () => {
-	let currentHash = window.location.hash.substring(1);
-	currentHash = initalHash;
-	const json = await getJSON(currentHash);
-	list.loadTrackList(json);
-})();
+document.addEventListener("DOMContentLoaded" , () => {
+	window.location.hash = "";
+	window.location.hash = initalHash;
+})
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
@@ -32,9 +30,9 @@ dom.search.addEventListener("click", async (e) => {
 });
 
 dom.btnNext.addEventListener("click", async () => {
-	const query = new URLSearchParams(prevHash.substring(1)).get("query");
 	append = true;
-	window.location.hash = `page=${++page}&query=${query}`;
+	const query = new URLSearchParams(prevHash.substring(1)).get("query");
+	window.location.hash = `page=${++page}&limit=${limit}&query=${query}`;
 });
 
 window.addEventListener("hashchange", async () => {
