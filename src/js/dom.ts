@@ -2,7 +2,7 @@ import { TrackMetaData } from "./sharedTypes";
 import { convertToMin } from "./utils";
 // import { list } from "./events";
 
-export const btnNext = document.querySelector("#btn-next") as HTMLButtonElement;
+export const btnNext = document.querySelector("#btn-load-next") as HTMLButtonElement;
 export const btnHistory = document.querySelector(
 	".btn-history",
 ) as HTMLButtonElement;
@@ -17,6 +17,8 @@ export const trackElement = document.querySelector(
 export const search = document.querySelector(
 	"#search-button",
 ) as HTMLButtonElement;
+export const trackPrev = document.querySelector("#track-prev") as HTMLButtonElement;
+export const trackNext = document.querySelector("#track-next") as HTMLButtonElement;
 export const playState = document.querySelector(
 	"#play-pause",
 ) as HTMLButtonElement;

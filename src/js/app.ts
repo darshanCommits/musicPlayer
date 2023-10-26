@@ -4,19 +4,21 @@ import * as player from "./events/player";
 import * as dom from "./dom";
 import { getJSON } from "./api";
 
-const limit = 18;
 let page = 1;
+const limit = 18;
 const initialQuery = "mohit chahuhan";
 const initalHash = `page=${page}&limit=${limit}&query=${initialQuery}`;
+
 let append = false;
 let prevHash = "";
+
 let currentTrackDiv: HTMLDivElement;
 const trackHistory: Set<HTMLDivElement> = new Set();
 
-document.addEventListener("DOMContentLoaded" , () => {
+document.addEventListener("DOMContentLoaded", () => {
 	window.location.hash = "";
 	window.location.hash = initalHash;
-})
+});
 
 dom.search.addEventListener("click", async (e) => {
 	e.preventDefault();
@@ -36,7 +38,6 @@ dom.btnNext.addEventListener("click", async () => {
 });
 
 window.addEventListener("hashchange", async () => {
-
 	const newHash = window.location.hash.substring(1);
 	const query = new URLSearchParams(newHash).get("query");
 
@@ -62,16 +63,16 @@ dom.audio.addEventListener("timeupdate", () => {
 dom.listContainer.addEventListener("click", (e) => {
 	const target = e.target as HTMLDivElement;
 	const isTrack = target?.classList.contains("track-card");
-	currentTrackDiv = isTrack
+	const elem = isTrack
 		? target
 		: (target.closest(".track-card") as HTMLDivElement);
 
-	playNewTrack(currentTrackDiv);
+	currentTrack.set(elem);
 });
 
 dom.audio.addEventListener("ended", () => {
-	currentTrackDiv = currentTrackDiv.nextElementSibling as HTMLDivElement;
-	playNewTrack(currentTrackDiv);
+	const nextTrack = currentTrackDiv.nextElementSibling as HTMLDivElement;
+	currentTrack.set(nextTrack);
 });
 
 dom.playState.addEventListener("click", () => {
@@ -84,11 +85,35 @@ dom.btnHistory.addEventListener("click", () => {
 	window.location.hash = "history";
 });
 
-const playNewTrack = (trackElem: HTMLDivElement) => {
-	trackHistory.add(trackElem);
-	list.playTrack(trackElem);
-	player.updatePauseBtn(true);
-	const updatedTrackInfo = dom.updateNowPlaying(trackElem);
+dom.trackNext.addEventListener("click", () => {
+	const nextTrack = currentTrackDiv.nextElementSibling as HTMLDivElement;
+	if (!nextTrack) return;
+	currentTrack.set(nextTrack);
+});
 
-	if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
+dom.trackPrev.addEventListener("click", () => {
+	const prevTrack = currentTrackDiv?.previousElementSibling as HTMLDivElement;
+
+	if (!prevTrack || dom.audio.currentTime > 3) dom.audio.currentTime = 0;
+	else currentTrack.set(prevTrack);
+});
+
+Object.defineProperty(window, "currentTrackDiv", {
+	get() {
+		return currentTrackDiv;
+	},
+	set(trackElem: HTMLDivElement) {
+		currentTrackDiv = trackElem;
+
+		trackHistory.add(trackElem);
+		list.playTrack(trackElem);
+		player.updatePauseBtn(true);
+		const updatedTrackInfo = dom.updateNowPlaying(trackElem);
+		if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
+	},
+});
+
+const currentTrack = Object.getOwnPropertyDescriptor(
+	window,"currentTrackDiv") as PropertyDescriptor & {
+	set: (value: HTMLDivElement) => void;
 };
