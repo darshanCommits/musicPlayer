@@ -40,8 +40,8 @@ export const updateElapsedTrackTimeDisplay = () => {
  */
 
 export const updatePauseBtn = (state: boolean) => {
-	if (state) dom.playState.innerText = "pause_circle_outline";
-	else dom.playState.innerText = "play_circle_outline";
+	if (state) dom.playState.innerText = "pause_circle";
+	else dom.playState.innerText = "play_circle";
 };
 
 /**

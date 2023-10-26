@@ -11,33 +11,6 @@
   --red: #2D3133;
 }
 
-#seekbar {
-  appearance: none;
-  background-color: var(--seekbar-bg);
-  background-size: 0% 100%;
-  background-image: linear-gradient(var(--seekbar-fg), var(--seekbar-fg));
-  background-repeat: no-repeat;
-}
-
-#seekbar::-webkit-slider-thumb {
-  appearance: none;
-  opacity: 0;
-  width: 20px;
-  height: 10px;
-  border-radius: var(--pill);
-  cursor: pointer;
-  transition: all .3s linear;
-  background-color: var(--seekbar-fg);
-}
-
-#seekbar:hover::-webkit-slider-thumb {
-  background-color: var(--seekbar-fg);
-}
-
-#seekbar :hover::-webkit-slider-thumb {
-  opacity: 1;
-}
-
 ::-webkit-scrollbar {
   width: 6px;
   background-color: var(--track-bg);
@@ -46,18 +19,46 @@
 ::-webkit-scrollbar-thumb {
   background-color: #333;
   border-radius: 5px;
+
+  &:hover {
+    background-color: #444;
+  }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #444;
+#seekbar {
+  appearance: none;
+  background-color: var(--seekbar-bg);
+  background-size: 0% 100%;
+  background-image: linear-gradient(var(--seekbar-fg), var(--seekbar-fg));
+  background-repeat: no-repeat;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    opacity: 0;
+    width: 20px;
+    height: 10px;
+    border-radius: var(--pill);
+    cursor: pointer;
+    transition: all .3s linear;
+    background-color: var(--seekbar-fg);
+
+    &:hover {
+      background-color: var(--seekbar-fg);
+    }
+  }
+
+  &:hover::-webkit-slider-thumb {
+    opacity: 1;
+  }
 }
 
 .track-card {
   cursor: pointer;
-}
 
-.track-card>* {
-  cursor: default;
+  >* {
+    cursor: default;
+  }
+
 }
 
 #btn-next.material-symbols-outlined {
