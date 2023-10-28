@@ -1,7 +1,7 @@
 interface ApiParams {
-  limit: number;
-  page: number;
-  query: string;
+	limit: number;
+	page: number;
+	query: string;
 }
 
 /**
@@ -41,9 +41,11 @@ export function textAbstract(text: string, length: number, ellipsis = "...") {
 }
 
 export const transformToApiParameters = (params: ApiParams) => {
-  const apiParams = Object.keys(params)
-    .map(key => `${key}=${encodeURIComponent(params[key])}`)
-    .join("&");
+	const apiParams = Object.keys(params)
+		.map(key => `${key}=${encodeURIComponent(params[key])}`)
+		.join("&");
 
-  return apiParams;
+	return apiParams;
 };
+
+export const findSummation = (n: number) => (n * (n + 1)) / 2;

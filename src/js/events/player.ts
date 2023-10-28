@@ -6,10 +6,7 @@ import { convertToMin } from "../utils";
  */
 
 export const updateSeekbarDisplay = () => {
-	const seekbarValue = (
-		(dom.audio.currentTime / dom.audio.duration) *
-		100
-	).toString();
+	const seekbarValue = ((dom.audio.currentTime / dom.audio.duration) * 100).toString();
 	dom.seekbar.value = seekbarValue;
 	dom.seekbar.style.backgroundSize = `${seekbarValue}% 100%`;
 };
@@ -52,4 +49,3 @@ export const updatePauseBtn = (state: boolean) => {
 export const updatePlaybackState = (state: boolean) => {
 	state ? dom.audio.play() : dom.audio.pause();
 };
-

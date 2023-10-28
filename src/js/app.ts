@@ -11,16 +11,35 @@ const initalHash = `page=${page}&limit=${limit}&query=${initialQuery}`;
 
 let append = false;
 let prevHash = "";
-
 let currentTrackDiv: HTMLDivElement;
 const trackHistory: Set<HTMLDivElement> = new Set();
+
+Object.defineProperty(window, "currentTrackDiv", {
+	get() {
+		return currentTrackDiv;
+	},
+	set(trackElem: HTMLDivElement) {
+		currentTrackDiv = trackElem;
+
+		trackHistory.add(trackElem);
+		list.playTrack(trackElem);
+		player.updatePauseBtn(true);
+
+		const updatedTrackInfo = dom.updateNowPlaying(trackElem);
+		if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
+	}
+});
+
+const currentTrack = Object.getOwnPropertyDescriptor(window, "currentTrackDiv") as PropertyDescriptor & {
+	set: (value: HTMLDivElement) => void;
+};
 
 document.addEventListener("DOMContentLoaded", () => {
 	window.location.hash = "";
 	window.location.hash = initalHash;
 });
 
-dom.search.addEventListener("click", async (e) => {
+dom.search.addEventListener("click", async e => {
 	e.preventDefault();
 	page = 1;
 	append = false;
@@ -43,8 +62,7 @@ window.addEventListener("hashchange", async () => {
 
 	if (prevHash === newHash || query === "") return;
 
-	if (newHash === "history")
-		dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
+	if (newHash === "history") dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
 	else {
 		const json = await getJSON(newHash);
 		list.loadTrackList(json, append);
@@ -60,12 +78,10 @@ dom.audio.addEventListener("timeupdate", () => {
 	player.updateSeekbarDisplay();
 });
 
-dom.listContainer.addEventListener("click", (e) => {
+dom.listContainer.addEventListener("click", e => {
 	const target = e.target as HTMLDivElement;
 	const isTrack = target?.classList.contains("track-card");
-	const elem = isTrack
-		? target
-		: (target.closest(".track-card") as HTMLDivElement);
+	const elem = isTrack ? target : (target.closest(".track-card") as HTMLDivElement);
 
 	currentTrack.set(elem);
 });
@@ -97,23 +113,3 @@ dom.trackPrev.addEventListener("click", () => {
 	if (!prevTrack || dom.audio.currentTime > 3) dom.audio.currentTime = 0;
 	else currentTrack.set(prevTrack);
 });
-
-Object.defineProperty(window, "currentTrackDiv", {
-	get() {
-		return currentTrackDiv;
-	},
-	set(trackElem: HTMLDivElement) {
-		currentTrackDiv = trackElem;
-
-		trackHistory.add(trackElem);
-		list.playTrack(trackElem);
-		player.updatePauseBtn(true);
-		const updatedTrackInfo = dom.updateNowPlaying(trackElem);
-		if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
-	},
-});
-
-const currentTrack = Object.getOwnPropertyDescriptor(
-	window,"currentTrackDiv") as PropertyDescriptor & {
-	set: (value: HTMLDivElement) => void;
-};

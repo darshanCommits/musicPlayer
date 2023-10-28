@@ -1,33 +1,18 @@
 import { TrackMetaData } from "./sharedTypes";
 import { convertToMin } from "./utils";
-// import { list } from "./events";
 
 export const btnNext = document.querySelector("#btn-load-next") as HTMLButtonElement;
-export const btnHistory = document.querySelector(
-	".btn-history",
-) as HTMLButtonElement;
 export const audio = document.querySelector("audio") as HTMLAudioElement;
 export const seekbar = document.getElementById("seekbar") as HTMLInputElement;
-export const input = document.querySelector(
-	"#search-input",
-) as HTMLInputElement;
-export const trackElement = document.querySelector(
-	"#track-art",
-) as HTMLDivElement;
-export const search = document.querySelector(
-	"#search-button",
-) as HTMLButtonElement;
+export const btnHistory = document.querySelector(".btn-history") as HTMLButtonElement;
+export const input = document.querySelector("#search-input") as HTMLInputElement;
+export const trackElement = document.querySelector("#track-art") as HTMLDivElement;
+export const search = document.querySelector("#search-button") as HTMLButtonElement;
 export const trackPrev = document.querySelector("#track-prev") as HTMLButtonElement;
 export const trackNext = document.querySelector("#track-next") as HTMLButtonElement;
-export const playState = document.querySelector(
-	"#play-pause",
-) as HTMLButtonElement;
-export const listContainer = document.querySelector(
-	"#list-container",
-) as HTMLDivElement;
-export const historyContainer = document.querySelector(
-	"#history-container",
-) as HTMLDivElement;
+export const playState = document.querySelector("#play-pause") as HTMLButtonElement;
+export const listContainer = document.querySelector("#list-container") as HTMLDivElement;
+export const historyContainer = document.querySelector("#history-container") as HTMLDivElement;
 
 /**
  * Generates the HTML list for a collection of tracks.
@@ -39,10 +24,7 @@ export const historyContainer = document.querySelector(
 export const generateTrackListHTML = (list: TrackMetaData[]) => {
 	if (!listContainer) throw new Error("element not found");
 
-	return list.reduce(
-		(html, track) => `${html}${generateTrackListItem(track)}`,
-		"",
-	);
+	return list.reduce((html, track) => `${html}${generateTrackListItem(track)}`, "");
 };
 
 /**
