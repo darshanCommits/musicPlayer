@@ -14,6 +14,7 @@ const API_ENDPOINT = "https://jiosaavn-api-privatecvc2.vercel.app/search/songs?"
 
 export const getJSON = async (params: string): Promise<TrackMetaData[]> => {
 	const apiURL = API_ENDPOINT + params;
+	console.log(apiURL);
 
 	try {
 		const result = await fetch(apiURL, { mode: "cors" });

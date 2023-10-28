@@ -48,4 +48,3 @@ export const transformToApiParameters = (params: ApiParams) => {
 	return apiParams;
 };
 
-export const findSummation = (n: number) => (n * (n + 1)) / 2;

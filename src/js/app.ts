@@ -7,7 +7,7 @@ import { getJSON } from "./api";
 let page = 1;
 const limit = 18;
 const initialQuery = "mohit chahuhan";
-const initalHash = `page=${page}&limit=${limit}&query=${initialQuery}`;
+const initialHash = `page=${page}&limit=${limit}&query=${initialQuery}`;
 
 let append = false;
 let prevHash = "";
@@ -25,7 +25,7 @@ Object.defineProperty(window, "currentTrackDiv", {
 		list.playTrack(trackElem);
 		player.updatePauseBtn(true);
 
-		const updatedTrackInfo = dom.updateNowPlaying(trackElem);
+		const updatedTrackInfo = dom.generateNowPlayingMarkup(trackElem);
 		if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
 	}
 });
@@ -36,7 +36,22 @@ const currentTrack = Object.getOwnPropertyDescriptor(window, "currentTrackDiv") 
 
 document.addEventListener("DOMContentLoaded", () => {
 	window.location.hash = "";
-	window.location.hash = initalHash;
+	window.location.hash = initialHash;
+});
+
+window.addEventListener("hashchange", async () => {
+	const newHash = window.location.hash.substring(1);
+	const query = new URLSearchParams(newHash).get("query");
+
+	if (prevHash === newHash || query === "") return;
+
+	if (newHash === "history") dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
+	else {
+		const json = await getJSON(newHash);
+		list.loadTrackList(json, append);
+	}
+
+	prevHash = newHash;
 });
 
 dom.search.addEventListener("click", async e => {
@@ -56,21 +71,6 @@ dom.btnNext.addEventListener("click", async () => {
 	window.location.hash = `page=${++page}&limit=${limit}&query=${query}`;
 });
 
-window.addEventListener("hashchange", async () => {
-	const newHash = window.location.hash.substring(1);
-	const query = new URLSearchParams(newHash).get("query");
-
-	if (prevHash === newHash || query === "") return;
-
-	if (newHash === "history") dom.listContainer.innerHTML = dom.convertTrackSetToHTML(trackHistory);
-	else {
-		const json = await getJSON(newHash);
-		list.loadTrackList(json, append);
-	}
-
-	prevHash = newHash;
-});
-
 dom.seekbar.addEventListener("input", player.setPlaybackPosition);
 
 dom.audio.addEventListener("timeupdate", () => {
@@ -80,9 +80,7 @@ dom.audio.addEventListener("timeupdate", () => {
 
 dom.listContainer.addEventListener("click", e => {
 	const target = e.target as HTMLDivElement;
-	const isTrack = target?.classList.contains("track-card");
-	const elem = isTrack ? target : (target.closest(".track-card") as HTMLDivElement);
-
+	const elem = list.getTrackDiv(target);
 	currentTrack.set(elem);
 });
 

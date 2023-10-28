@@ -15,26 +15,13 @@ export const listContainer = document.querySelector("#list-container") as HTMLDi
 export const historyContainer = document.querySelector("#history-container") as HTMLDivElement;
 
 /**
- * Generates the HTML list for a collection of tracks.
- *
- * @param list - An array of track metadata.
- * @returns The list component.
- */
-
-export const generateTrackListHTML = (list: TrackMetaData[]) => {
-	if (!listContainer) throw new Error("element not found");
-
-	return list.reduce((html, track) => `${html}${generateTrackListItem(track)}`, "");
-};
-
-/**
- * Generates HTML for an individual track item.
+ * Generates HTML for a track item.
  *
  * @param track - The track metadata.
  * @returns List item component.
  */
 
-export const generateTrackListItem = (track: TrackMetaData) => {
+export const generateTrackListMarkup = (track: TrackMetaData) => {
 	const listItemStyles =
 		"relative track-card flex p-4 transition-all border-red border focus:border-2 hover:scale-[1.02] hover:-translate-y-2 active:scale-[0.98] active:translate-y-0";
 	const imageStyles = "w-[4.25rem] h-[4.25rem]";
@@ -68,7 +55,7 @@ export const generateTrackListItem = (track: TrackMetaData) => {
  * @returns Component for player UI.
  */
 
-export const updateNowPlaying = (trackElem: HTMLDivElement) => {
+export const generateNowPlayingMarkup = (trackElem: HTMLDivElement) => {
 	if (!trackElem) {
 		console.error(`${trackElem} is missing`);
 		return null;
@@ -107,7 +94,11 @@ export const updateNowPlaying = (trackElem: HTMLDivElement) => {
 export const convertTrackSetToHTML = (trackSet: Set<HTMLDivElement>) => {
 	let result = "";
 
-	for (const track of trackSet) result += track.outerHTML;
+	for (const track of trackSet) {
+		if (track instanceof HTMLDivElement) {
+			result += track.outerHTML;
+		}
+	}
 
 	return result;
 };

@@ -23,6 +23,7 @@ export const setPlaybackPosition = () => {
 /**
  * Updates the display of elapsed track time.
  */
+
 export const updateElapsedTrackTimeDisplay = () => {
 	const elapsedTime = document.querySelector("#elapsed-time") as HTMLDivElement;
 	const currentTime = dom.audio.currentTime;
@@ -40,11 +41,6 @@ export const updatePauseBtn = (state: boolean) => {
 	if (state) dom.playState.innerText = "pause_circle";
 	else dom.playState.innerText = "play_circle";
 };
-
-/**
- * Update the playback state (play/pause).
- * @param state - True to play, false to pause.
- */
 
 export const updatePlaybackState = (state: boolean) => {
 	state ? dom.audio.play() : dom.audio.pause();

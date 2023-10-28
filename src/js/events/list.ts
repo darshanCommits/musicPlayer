@@ -24,19 +24,27 @@ export const playTrack = (trackElem: Element) => {
 };
 
 /**
- * Create a list of tracks.
+ * Create and append the list of tracks.
  * @param trackList - An array of track metadata.
  */
-
-export const createTrackList = (trackList: TrackMetaData[], append = false) => {
-	const musicItemList = dom.generateTrackListHTML(trackList);
-	if (append) dom.listContainer.innerHTML += musicItemList;
-	else dom.listContainer.innerHTML = musicItemList;
-};
 
 export const loadTrackList = (query: TrackMetaData[], append = false) => {
 	const trackList: TrackMetaData[] = query.map(track => getMetaData(track));
 
-	if (trackList.length !== 0) createTrackList(trackList, append);
-	// else handleNoResultsFound();
+	if (trackList.length === 0) throw new Error("NO RESULTS FOUND!");
+
+	const trackItemList = trackList
+		.reduce((markup, trackItem) =>
+			`${markup}${dom.generateTrackListMarkup(trackItem)}`, "");
+
+	if (append) dom.listContainer.innerHTML += trackItemList;
+	else dom.listContainer.innerHTML = trackItemList;
 };
+
+export const getTrackDiv = (target : HTMLDivElement) => {
+	const isTrack = target.classList.contains("track-card");
+	const elem = isTrack ? target : (target.closest(".track-card") as HTMLDivElement);
+	
+	return elem;
+}
+
