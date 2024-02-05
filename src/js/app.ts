@@ -21,11 +21,11 @@ Object.defineProperty(window, "currentTrackDiv", {
 	set(trackElem: HTMLDivElement) {
 		currentTrackDiv = trackElem;
 
-		trackHistory.add(trackElem);
-		list.playTrack(trackElem);
+		trackHistory.add(currentTrackDiv);
+		list.playTrack(currentTrackDiv);
 		player.updatePauseBtn(true);
 
-		const updatedTrackInfo = dom.generateNowPlayingMarkup(trackElem);
+		const updatedTrackInfo = dom.generateNowPlayingMarkup(currentTrackDiv);
 		if (updatedTrackInfo) dom.trackElement.innerHTML = updatedTrackInfo;
 	}
 });

@@ -47,4 +47,3 @@ export const transformToApiParameters = (params: ApiParams) => {
 
 	return apiParams;
 };
-
